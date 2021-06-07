@@ -33,6 +33,22 @@ namespace sss.Controllers
             return View();
         }
 
+        public IActionResult CreateSuggest()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult CreateSuggest(Suggestion suggestion)
+        {
+            using (sssContext dbContext = new sssContext())
+            {
+                dbContext.Add(suggestion);
+                dbContext.SaveChanges();
+            }
+            return RedirectToAction("ListSuggest");
+        }
+
         public IActionResult ListSuggest()
         {
             using (sssContext dbContext = new sssContext())
