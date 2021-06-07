@@ -28,6 +28,20 @@ namespace sss.Controllers
             return View();
         }
 
+        public IActionResult test()
+        {
+            return View();
+        }
+
+        public IActionResult ListSuggest()
+        {
+            using (sssContext dbContext = new sssContext())
+            {
+                var suggestList = dbContext.Suggestions.ToList();
+                return View(suggestList);
+            }
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
