@@ -41,12 +41,21 @@ namespace sss.Controllers
         [HttpPost]
         public IActionResult CreateSuggest(Suggestion suggestion)
         {
-            using (sssContext dbContext = new sssContext())
+            
+            if(suggestion.Topic != null && suggestion.Description != null && suggestion.CreatedDate != null)
             {
-                dbContext.Add(suggestion);
-                dbContext.SaveChanges();
+                using (sssContext dbContext = new sssContext())
+                {
+                    dbContext.Add(suggestion);
+                    dbContext.SaveChanges();
+                }
+                return RedirectToAction("ListSuggest");
             }
-            return RedirectToAction("ListSuggest");
+            else
+            {
+                return RedirectToAction("CreateSuggest");
+            }
+            
         }
 
         public IActionResult ListSuggest()
