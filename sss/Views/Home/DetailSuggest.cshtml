@@ -1,0 +1,46 @@
+﻿@model sss.Models.Suggestion
+
+@{
+    ViewData["Title"] = "DetailSuggest";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>DetailSuggest</h1>
+
+<div>
+    <h4>Suggestion</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Topic)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Topic)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CreatedDate)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CreatedDate)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.UpdatedDate)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.UpdatedDate)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="EditSuggest" asp-route-id="@Model.Id">Edit</a> |
+    <a asp-action="ListSuggest">Back to List</a>
+    <form asp-action="DeleteSuggest" method="post" asp-route-id="@Model.Id" onclick="return confirm('Are you want to delet this?')">
+        <button class="btn btn-danger" type="submit">Delete</button>
+    </form>
+</div>

@@ -59,6 +59,19 @@ namespace sss.Controllers
             
         }
 
+        public IActionResult DetailSuggest(int id)
+        {
+            using (sssContext dbContext = new sssContext())
+            {
+                var sg = dbContext.Suggestions.Where(a => a.Id == id).FirstOrDefault();
+                if (sg != null)
+                {
+                    return View(sg);
+                }
+            }
+            return RedirectToAction("ListSuggest");
+        }
+
 
         public IActionResult EditSuggest(int id)
         {
