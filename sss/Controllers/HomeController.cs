@@ -59,6 +59,38 @@ namespace sss.Controllers
             
         }
 
+
+        public IActionResult EditSuggest(int id)
+        {
+            using (sssContext dbContext = new sssContext())
+            {
+                var sg = dbContext.Suggestions.Where(a => a.Id == id).FirstOrDefault();
+                if(sg != null)
+                {
+                    return View(sg);
+                }
+            }
+            return RedirectToAction("ListSuggest");
+        }
+
+
+        [HttpPost]
+        public IActionResult EditSuggest(int id, Suggestion suggestion)
+        {
+            if(suggestion.Topic != null && suggestion.Description != null)
+            {
+                using (sssContext dbContext = new sssContext())
+                {
+                    var sg = dbContext.Suggestions.Where(a => a.Id == id).FirstOrDefault();
+                    sg.Topic = suggestion.Topic;
+                    sg.Description = suggestion.Description;
+                    sg.UpdatedDate = DateTime.Now;
+                    dbContext.SaveChanges();
+                }
+            }
+            return RedirectToAction("ListSuggest");
+        }
+
         [HttpPost]
         public IActionResult DeleteSuggest(int id)
         {
@@ -70,6 +102,7 @@ namespace sss.Controllers
                 return RedirectToAction("ListSuggest");
             }
         }
+
         public IActionResult ListSuggest()
         {
             using (sssContext dbContext = new sssContext())
