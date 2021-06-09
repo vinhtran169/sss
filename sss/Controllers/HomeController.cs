@@ -42,8 +42,9 @@ namespace sss.Controllers
         public IActionResult CreateSuggest(Suggestion suggestion)
         {
             
-            if(suggestion.Topic != null && suggestion.Description != null && suggestion.CreatedDate != null)
+            if(suggestion.Topic != null && suggestion.Description != null)
             {
+                suggestion.CreatedDate = DateTime.Now;
                 using (sssContext dbContext = new sssContext())
                 {
                     dbContext.Add(suggestion);
@@ -58,6 +59,17 @@ namespace sss.Controllers
             
         }
 
+        [HttpPost]
+        public IActionResult DeleteSuggest(int id)
+        {
+            using (sssContext dbContext = new sssContext())
+            {
+                var sg = dbContext.Suggestions.Where(a => a.Id == id).FirstOrDefault();
+                dbContext.Remove(sg);
+                dbContext.SaveChanges();
+                return RedirectToAction("ListSuggest");
+            }
+        }
         public IActionResult ListSuggest()
         {
             using (sssContext dbContext = new sssContext())
