@@ -5,7 +5,6 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>CreateSuggest</h1>
 <h4>Suggestion</h4>
 <hr />
 <div class="row">
@@ -19,22 +18,15 @@
         </div>*@
             <div class="form-group">
                 <label asp-for="Topic" class="control-label"></label>
-                <input asp-for="Topic" class="form-control" required/>
                 <span asp-validation-for="Topic" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" class="form-control" required/>
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
-
-            @*<div class="form-group md-form md-outline input-with-post-icon datepicker">
                 <label asp-for="CreatedDate" class="control-label"></label>
-                <input asp-for="CreatedDate" placeholder="Select date" type="date" id="example" class="form-control" required>
                 <span asp-validation-for="CreatedDate" class="text-danger"></span>
-            </div>*@
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" formmethod="post" />
             </div>
         </form>
     </div>
