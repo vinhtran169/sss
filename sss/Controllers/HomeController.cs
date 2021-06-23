@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using sss.Models;
 using System;
@@ -42,7 +43,7 @@ namespace sss.Controllers
         public IActionResult CreateSuggest(Suggestion suggestion)
         {
             
-            if(suggestion.Topic != null && suggestion.Description != null)
+            if(suggestion.Title != null && suggestion.Description != null)
             {
                 suggestion.CreatedDate = DateTime.Now;
                 using (sssContext dbContext = new sssContext())
@@ -90,12 +91,12 @@ namespace sss.Controllers
         [HttpPost]
         public IActionResult EditSuggest(int id, Suggestion suggestion)
         {
-            if(suggestion.Topic != null && suggestion.Description != null)
+            if(suggestion.Title != null && suggestion.Description != null)
             {
                 using (sssContext dbContext = new sssContext())
                 {
                     var sg = dbContext.Suggestions.Where(a => a.Id == id).FirstOrDefault();
-                    sg.Topic = suggestion.Topic;
+                    sg.Title = suggestion.Title;
                     sg.Description = suggestion.Description;
                     sg.UpdatedDate = DateTime.Now;
                     dbContext.SaveChanges();
@@ -123,6 +124,13 @@ namespace sss.Controllers
                 var suggestList = dbContext.Suggestions.ToList();
                 return View(suggestList);
             }
+        }
+
+
+        [HttpPost]
+        public IActionResult CreateSuggest(IFormCollection forms)
+        {
+            return View();
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
