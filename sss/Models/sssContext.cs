@@ -17,7 +17,6 @@ namespace sss.Models
         {
         }
 
-        public virtual DbSet<Account> Accounts { get; set; }
         public virtual DbSet<Reward> Rewards { get; set; }
         public virtual DbSet<Suggestion> Suggestions { get; set; }
         public virtual DbSet<Systemuser> Systemusers { get; set; }
@@ -27,33 +26,12 @@ namespace sss.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Server=TVVINH-NEWPC\\SQLEXPRESS;Database=sss;User Id=sa;password=khongco@12;Trusted_Connection=False;");
+                optionsBuilder.UseSqlServer("Server=DESKTOP-6C118CM;Database=sss;User Id=khanh;password=23111999;Trusted_Connection=False;");
             }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Account>(entity =>
-            {
-                entity.ToTable("account");
-
-                entity.Property(e => e.Id).HasColumnName("id");
-
-                entity.Property(e => e.Password)
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .HasColumnName("password");
-
-                entity.Property(e => e.Status)
-                    .HasMaxLength(10)
-                    .HasColumnName("status");
-
-                entity.Property(e => e.Username)
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .HasColumnName("username");
-            });
-
             modelBuilder.Entity<Reward>(entity =>
             {
                 entity.ToTable("reward");
