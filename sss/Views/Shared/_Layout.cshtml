@@ -1,48 +1,116 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - sss</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" />
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>@ViewData["Title"] - sss</title>
+	<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="~/lib/bootstrap/icons-1.5.0/font/bootstrap-icons.css" />
+	<link rel="stylesheet" href="~/css/site.css" />
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" 
+		  integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
 </head>
 <body>
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">sss</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
+			<div class="container">
+				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+						aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+					<ul class="navbar-nav flex-grow-1">
+						<li class="nav-item">
+							<a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index"><span class="bi bi-house-fill"></span> Home</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+						</li>
+					</ul>
+				</div>
+				<ul class="navbar-nav justify-content-end">
+					<li class="nav-item">
+						<a class="nav-link text-dark" asp-controller="Account" asp-action="Login"><span class="fas fa-sign-in-alt" style="margin-right:10px"></span>Login</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link text-dark" asp-controller="Account" asp-action="Register"><span class="far fa-registered" style="margin-right:10px"></span>Register</a>
+					</li>
+				</ul>
+			</div>
         </nav>
     </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
+	<div class=".container-fluid">
+	<img src="~/img/supreme.png" alt="error">
+	<div class="progress">
+		<div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="50"s
+			 aria-valuemin="0" aria-valuemax="100" style="width:100%">
+		</div>
+	</div>
+</div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2021 - sss - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
-    </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    @RenderSection("Scripts", required: false)
+	<div class=".container-fluid">
+		<div class="row">
+			<div class="col-sm-3">
+				<ul class="list-group">
+					<li class="list-group-item"><a asp-controller="Account" asp-action="login" target="mainframe">View My Information</a></li>
+					<li class="list-group-item"><a href="#">View My Declaration</a></li>
+					<li class="list-group-item"><a href="#temperature" data-toggle="collapse">Temperature Declaration <span class="bi bi-arrow-down-circle" id="downcircle" style="margin-left:50px"></span> </a></li>
+					<div id="temperature" class="collapse">
+						<ul class="list-group">
+							<li class="list-group-item"><a href="#">Submission of Own Declaration</a></li>
+							<li class="list-group-item"><a href="#">Submission of Declaration for Others </a></li>
+							<li class="list-group-item"><a href="#">Submission of Declaration for Externel Parties</a></li>
+							<li class="list-group-item"><a href="#">Print Blank Form</a></li>
+						</ul>
+					</div>
+
+					<li class="list-group-item"><a href="#declaration" data-toggle="collapse">Declaration Form Management <span class="bi bi-arrow-down-circle" id="downcircle" style="margin-left:20px"></span></a></li>
+					<div id="declaration" class="collapse">
+						<ul class="list-group">
+							<li class="list-group-item"><a href="#">Update Declaration Form</a></li>
+						</ul>
+					</div>
+					<li class="list-group-item"><a href="#">Mousekeeping Staff Records</a></li>
+					<li class="list-group-item"><a href="#manage" data-toggle="collapse">Manage Staff Information<span class="bi bi-arrow-down-circle" id="downcircle" style="margin-left:20px"></span></a></li>
+					<div class="collapse" id="manage">
+						<ul class="list-group">
+							<li class="list-group-item"><a href="#">Update Staff Information</a></li>
+							<li class="list-group-item"><a href="#">Update Own Information</a></li>
+						</ul>
+					</div>
+
+					<li class="list-group-item"><a href="#">Configurations Management  </a></li>
+					<li class="list-group-item"><a href="#">Notifications Management</a></li>
+					<li class="list-group-item"><a href="#generate" data-toggle="collapse">Generate Report <span class="bi bi-arrow-down-circle" id="downcircle" style="margin-left:20px"></span></a></li>
+					<div class="collapse" id="generate">
+						<ul class="list-group">
+							<li class="list-group-item"><a href="#">Manage Roles</a></li>
+							<li class="list-group-item"><a href="#">Assign Roles</a></li>
+							<li class="list-group-item"><a href="#">Manage User Groups</a></li>
+							<li class="list-group-item"><a href="#">Manage Department</a></li>
+						</ul>
+					</div>
+
+					<li class="list-group-item"><a href="#" style="margin-left:20px"><span class="bi bi-trash" id="recycle"></span>Recycle</a></li>
+					<li class="list-group-item"><a href="#" style="margin-left:20px"><span class="bi bi-folder" id="allsite"></span>All site</a></li>
+				</ul>
+			</div>
+			<div class="col-sm-9">
+				<main role="main" class="pb-3">
+					@RenderBody()
+				</main>
+			</div>
+		</div>
+	</div>		
+
+		<footer class="border-top footer text-muted">
+			<div class="container">
+				&copy; 2021 - Suggestion Sysytem Staff - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+			</div>
+		</footer>
+		<script src="~/lib/jquery/dist/jquery.min.js"></script>
+		<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+		<script src="~/js/site.js" asp-append-version="true"></script>
+		@RenderSection("Scripts", required: false)
 </body>
 </html>
