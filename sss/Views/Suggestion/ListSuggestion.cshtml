@@ -1,0 +1,38 @@
+﻿@model IEnumerable<Suggestion>
+
+@{
+    ViewData["Title"] = "List Suggestion";
+    Layout = "_Layout";
+}
+
+<h2>List Suggest</h2>
+<p>
+    <a asp-action="CreateSuggestion">Create a suggestion</a>
+</p>
+<table class="table">
+    <thead>
+    <tr>
+        <th>Title</th>
+        <th>Description</th>
+        <th>Created Date</th>
+        <th>Updated Date</th>
+        <th/>
+        <th/>
+        <th/>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (Suggestion s in Model)
+    {
+        <tr>
+            <td>@s.Title</td>
+            <td>@s.Description</td>
+            <td>@s.CreatedDate</td>
+            <td>@s.UpdatedDate</td>
+            <td><a asp-action="EditSuggestion" asp-route-id="@s.Id">Edit</a></td>
+            <td><a asp-action="DetailsSuggestion" asp-route-id="@s.Id">Details</a></td>
+            <td><a asp-action="DeleteSuggestion" asp-route-id="@s.Id">Delete</a></td>
+        </tr>
+    }
+    </tbody>
+</table>
