@@ -7,10 +7,11 @@ using System.Threading.Tasks;
 using sss.Models;
 namespace sss.Controllers
 {
-    public class SuggestionController : Controller
+    public class SuggestController : Controller
     {
         [HttpGet]
-        public IActionResult CreateSuggestion()
+        [Route("Home/suggest/create")]
+        public IActionResult Create()
         {
             HttpContext.Session.SetString("username","admin"); // create a session demo
 
@@ -25,7 +26,8 @@ namespace sss.Controllers
             }
         }
         [HttpPost]
-        public IActionResult CreateSuggestion(Suggestion suggestion)
+        [Route("Home/suggest/create")]
+        public IActionResult Create(Suggestion suggestion)
         {
 
             if (suggestion.Title != null && suggestion.Description!= null && HttpContext.Session.GetString("username")!= null)

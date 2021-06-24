@@ -33,27 +33,27 @@ namespace sss.Controllers
         {
             return View();
         }
+        
+        //public IActionResult ListSuggest()
+        //{
+        //    using (sssContext dbContext = new sssContext())
+        //    {
+        //        var suggestList = dbContext.Suggestions.ToList();
+        //        return View(suggestList);
+        //    }
+        //}
 
-        public IActionResult ListSuggest()
-        {
-            using (sssContext dbContext = new sssContext())
-            {
-                var suggestList = dbContext.Suggestions.ToList();
-                return View(suggestList);
-            }
-        }
+        //[HttpGet]
+        //public IActionResult CreateSuggest()
+        //{
+        //    return View();
+        //}
 
-        [HttpGet]
-        public IActionResult CreateSuggest()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        public IActionResult CreateSuggest(IFormCollection forms)
-        {
-            return View();
-        }
+        //[HttpPost]
+        //public IActionResult CreateSuggest(IFormCollection forms)
+        //{
+        //    return View();
+        //}
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
