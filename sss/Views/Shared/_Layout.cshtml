@@ -12,23 +12,20 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-			<div class="container">
-				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-						aria-expanded="false" aria-label="Toggle navigation">
-					<span class="navbar-toggler-icon"></span>
-				</button>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow">
+			<div class="container-fluid">
 				<div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
 					<ul class="navbar-nav flex-grow-1">
+						<li class="navbar-brand">Suggestion System Staff</li>
 						<li class="nav-item">
-							<a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index"><span class="bi bi-house-fill"></span> Home</a>
+							<a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index"><span class="bi bi-house-fill" id="home"></span> Home</a>
 						</li>
 						<li class="nav-item">
 							<a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
 						</li>
 					</ul>
 				</div>
-				<ul class="navbar-nav justify-content-end">
+				<ul class="navbar-nav justify-content-end navbar-right-account">
 					<li class="nav-item">
 						<a class="nav-link text-dark" asp-controller="Account" asp-action="Login"><span class="fas fa-sign-in-alt" style="margin-right:10px"></span>Login</a>
 					</li>
@@ -39,8 +36,8 @@
 			</div>
         </nav>
     </header>
-	<div class=".container-fluid">
-	<img src="~/img/supreme.png" alt="error">
+	<div class=".container-fluid logo">
+	<img class="rounded" src="~/img/supreme.png" alt="logo">
 	<div class="progress">
 		<div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="50"s
 			 aria-valuemin="0" aria-valuemax="100" style="width:100%">
@@ -48,13 +45,13 @@
 	</div>
 </div>
 
-	<div class=".container-fluid">
+	<div class="container-fluid">
 		<div class="row">
-			<div class="col-sm-3">
-				<ul class="list-group">
-					<li class="list-group-item"><a asp-controller="Account" asp-action="login" target="mainframe">View My Information</a></li>
-					<li class="list-group-item"><a href="#">View My Declaration</a></li>
-					<li class="list-group-item"><a href="#temperature" data-toggle="collapse">Temperature Declaration <span class="bi bi-arrow-down-circle" id="downcircle" style="margin-left:50px"></span> </a></li>
+			<div class="col-lg-3">
+				<ul class="list-group menu">
+					<li class="list-group-item "><a class="text-danger font-weight-bolder" href="">View My Information</a></li>
+					<li class="list-group-item "><a class="text-danger font-weight-bolder" href="#">View My Declaration</a></li>
+					<li class="list-group-item "><a class="text-danger font-weight-bolder" href="#temperature" data-toggle="collapse">Temperature Declaration <span class="bi bi-arrow-down-circle" id="downcircle" style="margin-left:57px"></span> </a></li>
 					<div id="temperature" class="collapse">
 						<ul class="list-group">
 							<li class="list-group-item"><a href="#">Submission of Own Declaration</a></li>
@@ -64,14 +61,14 @@
 						</ul>
 					</div>
 
-					<li class="list-group-item"><a href="#declaration" data-toggle="collapse">Declaration Form Management <span class="bi bi-arrow-down-circle" id="downcircle" style="margin-left:20px"></span></a></li>
+					<li class="list-group-item"><a class="text-danger font-weight-bolder" href="#declaration" data-toggle="collapse">Declaration Form Management <span class="bi bi-arrow-down-circle" id="downcircle" style="margin-left:10px"></span></a></li>
 					<div id="declaration" class="collapse">
 						<ul class="list-group">
 							<li class="list-group-item"><a href="#">Update Declaration Form</a></li>
 						</ul>
 					</div>
-					<li class="list-group-item"><a href="#">Mousekeeping Staff Records</a></li>
-					<li class="list-group-item"><a href="#manage" data-toggle="collapse">Manage Staff Information<span class="bi bi-arrow-down-circle" id="downcircle" style="margin-left:20px"></span></a></li>
+					<li class="list-group-item"><a class="text-danger font-weight-bolder" href="#">Mousekeeping Staff Records</a></li>
+					<li class="list-group-item"><a class="text-danger font-weight-bolder" href="#manage" data-toggle="collapse">Manage Staff Information<span class="bi bi-arrow-down-circle" id="downcircle" style="margin-left:52px"></span></a></li>
 					<div class="collapse" id="manage">
 						<ul class="list-group">
 							<li class="list-group-item"><a href="#">Update Staff Information</a></li>
@@ -79,9 +76,9 @@
 						</ul>
 					</div>
 
-					<li class="list-group-item"><a href="#">Configurations Management  </a></li>
-					<li class="list-group-item"><a href="#">Notifications Management</a></li>
-					<li class="list-group-item"><a href="#generate" data-toggle="collapse">Generate Report <span class="bi bi-arrow-down-circle" id="downcircle" style="margin-left:20px"></span></a></li>
+					<li class="list-group-item"><a class="text-danger font-weight-bolder" href="#">Configurations Management  </a></li>
+					<li class="list-group-item"><a class="text-danger font-weight-bolder" href="#">Notifications Management</a></li>
+					<li class="list-group-item"><a class="text-danger font-weight-bolder" href="#generate" data-toggle="collapse">Generate Report <span class="bi bi-arrow-down-circle" id="downcircle" style="margin-left:122px"></span></a></li>
 					<div class="collapse" id="generate">
 						<ul class="list-group">
 							<li class="list-group-item"><a href="#">Manage Roles</a></li>
@@ -91,11 +88,11 @@
 						</ul>
 					</div>
 
-					<li class="list-group-item"><a href="#" style="margin-left:20px"><span class="bi bi-trash" id="recycle"></span>Recycle</a></li>
-					<li class="list-group-item"><a href="#" style="margin-left:20px"><span class="bi bi-folder" id="allsite"></span>All site</a></li>
+					<li class="list-group-item"><a class="font-weight-bolder" href="#" style="margin-left:20px"><span class="bi bi-trash" id="recycle"></span>Recycle</a></li>
+					<li class="list-group-item"><a class="font-weight-bolder" href="#" style="margin-left:20px"><span class="bi bi-folder" id="allsite"></span>All site</a></li>
 				</ul>
 			</div>
-			<div class="col-sm-9">
+			<div class="col-lg-9">
 				<main role="main" class="pb-3">
 					@RenderBody()
 				</main>
@@ -103,9 +100,9 @@
 		</div>
 	</div>		
 
-		<footer class="border-top footer text-muted">
-			<div class="container">
-				&copy; 2021 - Suggestion Sysytem Staff - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+		<footer class="border-top footer text-muted footer">
+			<div class="container-fluid">
+				&copy; 2021 - Suggestion Sysytem Staff
 			</div>
 		</footer>
 		<script src="~/lib/jquery/dist/jquery.min.js"></script>
