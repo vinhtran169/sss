@@ -6,42 +6,53 @@
 }
 
 
+<h3 style="margin-top:10px ;color: #0366d6;">Create Suggestion</h3>
 
-<h1>Create Suggest</h1>
 
-<h4>Suggestion</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
+<div class="row" style="margin-right:0px">
+    <div class="col-md-8">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
+            <div class="form-group" id="parent">
                 <label asp-for="Title" class="control-label"></label>
-                <input asp-for="Title" class="form-control" />
+                <input id="myAutocomplete" asp-for="Title" class="form-control" />
                 <span asp-validation-for="Title" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" class="form-control" />
+                <textarea id="description" style="height:200px;" cols="40" asp-for="Description" class="form-control"></textarea>
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="CreatedDate" class="control-label"></label>
-                <input asp-for="CreatedDate" class="form-control" />
+                <input asp-for="CreatedDate" class="form-control" type="date" value="@DateTime.Today.ToString("yyyy-MM-dd")" readonly />
                 <span asp-validation-for="CreatedDate" class="text-danger"></span>
             </div>
-            @*<div class="form-group">
-            <label asp-for="UpdatedDate" class="control-label"></label>
-            <input asp-for="UpdatedDate" class="form-control" />
-            <span asp-validation-for="UpdatedDate" class="text-danger"></span>
-        </div>*@
+
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="button" value="Clear" class="btn btn-secondary" onClick="clearIt()" />
+                <input type="button" value="Cancel" onclick="@("window.location.href='" + @Url.Action("Index", "Home") + "'");" class="btn btn-danger" />
             </div>
         </form>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+
+<script>
+    function clearIt() {
+        document.getElementById('description').value = "";
+        document.getElementById('myAutocomplete').value = "";
+    }
+    var src = {
+        "Đóng góp ý kiến về vấn đề": 1,
+        "Thắc mắc về": 2,
+        "các thiết bị": 3,
+    }
+
+    $('#myAutocomplete').autocomplete({
+        source: src,
+        highlightClass: 'text-danger',
+        treshold: 2,
+    });
+</script>

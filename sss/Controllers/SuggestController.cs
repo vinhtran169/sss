@@ -39,6 +39,7 @@ namespace sss.Controllers
 
                     suggestion.CreatedDate = DateTime.Now;
                     suggestion.UpdatedDate = DateTime.Now;
+                    suggestion.ImplementDate = DateTime.Now;
                     suggestion.Creator = HttpContext.Session.GetString("username");
                     suggestion.Userid = router.Userid;
 
