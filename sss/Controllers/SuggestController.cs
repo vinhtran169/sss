@@ -46,6 +46,7 @@ namespace sss.Controllers
                     dbContext.Suggestions.Add(suggestion);
                     dbContext.SaveChanges();
                 }
+                Response.Redirect("list");
             }
 
             return View();
