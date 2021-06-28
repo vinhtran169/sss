@@ -18,7 +18,9 @@ namespace sss.Models
         }
 
         public virtual DbSet<Account> Accounts { get; set; }
+        public virtual DbSet<Reward> Rewards { get; set; }
         public virtual DbSet<Suggestion> Suggestions { get; set; }
+        public virtual DbSet<Systemuser> Systemusers { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -52,6 +54,22 @@ namespace sss.Models
                     .HasColumnName("username");
             });
 
+            modelBuilder.Entity<Reward>(entity =>
+            {
+                entity.ToTable("reward");
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.RewardMoney).HasColumnName("reward_money");
+
+                entity.Property(e => e.Status).HasColumnName("status");
+
+                entity.Property(e => e.TypeOfSuggest)
+                    .HasMaxLength(10)
+                    .HasColumnName("type_of_suggest")
+                    .IsFixedLength(true);
+            });
+
             modelBuilder.Entity<Suggestion>(entity =>
             {
                 entity.ToTable("suggestion");
@@ -59,21 +77,86 @@ namespace sss.Models
                 entity.Property(e => e.Id).HasColumnName("id");
 
                 entity.Property(e => e.CreatedDate)
-                    .HasColumnType("datetime")
+                    .HasColumnType("date")
                     .HasColumnName("created_date");
 
-                entity.Property(e => e.Description)
-                    .IsRequired()
-                    .HasColumnName("description");
+                entity.Property(e => e.Creator)
+                    .HasMaxLength(10)
+                    .HasColumnName("creator")
+                    .IsFixedLength(true);
 
-                entity.Property(e => e.Topic)
+                entity.Property(e => e.Description).HasColumnName("description");
+
+                entity.Property(e => e.ImplementDate)
+                    .HasColumnType("date")
+                    .HasColumnName("implement_date");
+
+                entity.Property(e => e.RemarkFromApprover).HasColumnName("remark_from_approver");
+
+                entity.Property(e => e.RewardMoney).HasColumnName("reward_money");
+
+                entity.Property(e => e.StatusType)
+                    .HasMaxLength(10)
+                    .HasColumnName("status_type")
+                    .IsFixedLength(true);
+
+                entity.Property(e => e.Title)
                     .IsRequired()
-                    .HasMaxLength(250)
-                    .HasColumnName("topic");
+                    .HasMaxLength(100)
+                    .HasColumnName("title");
 
                 entity.Property(e => e.UpdatedDate)
-                    .HasColumnType("datetime")
+                    .HasColumnType("date")
                     .HasColumnName("updated_date");
+
+                entity.Property(e => e.Userid)
+                    .HasMaxLength(10)
+                    .HasColumnName("userid")
+                    .IsFixedLength(true);
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.Suggestions)
+                    .HasForeignKey(d => d.Userid)
+                    .HasConstraintName("FK_suggestion_systemuser");
+            });
+
+            modelBuilder.Entity<Systemuser>(entity =>
+            {
+                entity.HasKey(e => e.Userid);
+
+                entity.ToTable("systemuser");
+
+                entity.Property(e => e.Userid)
+                    .HasMaxLength(10)
+                    .HasColumnName("userid")
+                    .IsFixedLength(true);
+
+                entity.Property(e => e.CreatedDate)
+                    .HasColumnType("date")
+                    .HasColumnName("created_date");
+
+                entity.Property(e => e.Department)
+                    .HasMaxLength(10)
+                    .HasColumnName("department")
+                    .IsFixedLength(true);
+
+                entity.Property(e => e.Description).HasColumnName("description");
+
+                entity.Property(e => e.Email)
+                    .HasMaxLength(10)
+                    .HasColumnName("email")
+                    .IsFixedLength(true);
+
+                entity.Property(e => e.Role)
+                    .HasMaxLength(10)
+                    .HasColumnName("role")
+                    .IsFixedLength(true);
+
+                entity.Property(e => e.Username)
+                    .IsRequired()
+                    .HasMaxLength(10)
+                    .HasColumnName("username")
+                    .IsFixedLength(true);
             });
 
             OnModelCreatingPartial(modelBuilder);

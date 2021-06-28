@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using sss.Models;
 using System;
@@ -40,6 +41,18 @@ namespace sss.Controllers
                 var suggestList = dbContext.Suggestions.ToList();
                 return View(suggestList);
             }
+        }
+
+        [HttpGet]
+        public IActionResult CreateSuggest()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult CreateSuggest(IFormCollection forms)
+        {
+            return View();
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
