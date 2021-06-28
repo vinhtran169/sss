@@ -9,14 +9,15 @@
 	<link rel="stylesheet" href="~/css/site.css" />
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" 
 		  integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow">
+	<header>
+		<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow">
 			<div class="container-fluid">
 				<div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
 					<ul class="navbar-nav flex-grow-1">
-						<li class="navbar-brand">Suggestion System Staff</li>
+						<li class="navbar-brand">Staff Suggestion System</li>
 						<li class="nav-item">
 							<a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index"><span class="bi bi-house-fill" id="home"></span> Home</a>
 						</li>
@@ -34,62 +35,38 @@
 					</li>
 				</ul>
 			</div>
-        </nav>
-    </header>
-	<div class=".container-fluid logo">
-	<img class="rounded" src="~/img/supreme.png" alt="logo">
+		</nav>
+	</header>
+	<div class="container-fluid logo">
+		<img class="rounded" src="~/img/supreme.png" alt="logo" style="margin-left:-20px">
+	</div>
 	<div class="progress">
-		<div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="50"s
+		<div class="progress-bar progress-bar-info progress-bar-color" role="progressbar" aria-valuenow="50" s
 			 aria-valuemin="0" aria-valuemax="100" style="width:100%">
 		</div>
 	</div>
-</div>
 
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-lg-3">
 				<ul class="list-group menu">
-					<li class="list-group-item "><a class="text-danger font-weight-bolder" href="">View My Information</a></li>
-					<li class="list-group-item "><a class="text-danger font-weight-bolder" href="#">View My Declaration</a></li>
-					<li class="list-group-item "><a class="text-danger font-weight-bolder" href="#temperature" data-toggle="collapse">Temperature Declaration <span class="bi bi-arrow-down-circle" id="downcircle" style="margin-left:57px"></span> </a></li>
-					<div id="temperature" class="collapse">
+					<li class="list-group-item" id="group1"><a id="asugges" class="text-danger font-weight-bolder" href="#suggestion" data-toggle="collapse">Suggestion<span class="bi bi-arrow-down-circle" id="downcircle" style="margin-left:170px"></span></a></li>
+					<div id="suggestion" class="collapse">
 						<ul class="list-group">
-							<li class="list-group-item"><a href="#">Submission of Own Declaration</a></li>
-							<li class="list-group-item"><a href="#">Submission of Declaration for Others </a></li>
-							<li class="list-group-item"><a href="#">Submission of Declaration for Externel Parties</a></li>
-							<li class="list-group-item"><a href="#">Print Blank Form</a></li>
+							<li class="list-group-item"><a href="#">Add new suggest</a></li>
+							<li class="list-group-item"><a href="#">Suggestion List </a></li>
+							<li class="list-group-item"><a href="#">My approving list</a></li>
+							<li class="list-group-item"><a href="#">My suggestion list</a></li>
 						</ul>
 					</div>
 
-					<li class="list-group-item"><a class="text-danger font-weight-bolder" href="#declaration" data-toggle="collapse">Declaration Form Management <span class="bi bi-arrow-down-circle" id="downcircle" style="margin-left:10px"></span></a></li>
-					<div id="declaration" class="collapse">
+					<li class="list-group-item" id="group2"><a id="admin" class="text-danger font-weight-bolder" href="#administrator" data-toggle="collapse">Adminstrator section <span class="bi bi-arrow-down-circle" id="downcircle" style="margin-left:93px"></span></a></li>
+					<div id="administrator" class="collapse">
 						<ul class="list-group">
-							<li class="list-group-item"><a href="#">Update Declaration Form</a></li>
+							<li class="list-group-item"><a href="#">Create new user</a></li>
+							<li class="list-group-item"><a href="#">User list</a></li>
 						</ul>
 					</div>
-					<li class="list-group-item"><a class="text-danger font-weight-bolder" href="#">Mousekeeping Staff Records</a></li>
-					<li class="list-group-item"><a class="text-danger font-weight-bolder" href="#manage" data-toggle="collapse">Manage Staff Information<span class="bi bi-arrow-down-circle" id="downcircle" style="margin-left:52px"></span></a></li>
-					<div class="collapse" id="manage">
-						<ul class="list-group">
-							<li class="list-group-item"><a href="#">Update Staff Information</a></li>
-							<li class="list-group-item"><a href="#">Update Own Information</a></li>
-						</ul>
-					</div>
-
-					<li class="list-group-item"><a class="text-danger font-weight-bolder" href="#">Configurations Management  </a></li>
-					<li class="list-group-item"><a class="text-danger font-weight-bolder" href="#">Notifications Management</a></li>
-					<li class="list-group-item"><a class="text-danger font-weight-bolder" href="#generate" data-toggle="collapse">Generate Report <span class="bi bi-arrow-down-circle" id="downcircle" style="margin-left:122px"></span></a></li>
-					<div class="collapse" id="generate">
-						<ul class="list-group">
-							<li class="list-group-item"><a href="#">Manage Roles</a></li>
-							<li class="list-group-item"><a href="#">Assign Roles</a></li>
-							<li class="list-group-item"><a href="#">Manage User Groups</a></li>
-							<li class="list-group-item"><a href="#">Manage Department</a></li>
-						</ul>
-					</div>
-
-					<li class="list-group-item"><a class="font-weight-bolder" href="#" style="margin-left:20px"><span class="bi bi-trash" id="recycle"></span>Recycle</a></li>
-					<li class="list-group-item"><a class="font-weight-bolder" href="#" style="margin-left:20px"><span class="bi bi-folder" id="allsite"></span>All site</a></li>
 				</ul>
 			</div>
 			<div class="col-lg-9">
@@ -98,16 +75,16 @@
 				</main>
 			</div>
 		</div>
-	</div>		
+	</div>
 
-		<footer class="border-top footer text-muted footer">
-			<div class="container-fluid">
-				&copy; 2021 - Suggestion Sysytem Staff
-			</div>
-		</footer>
-		<script src="~/lib/jquery/dist/jquery.min.js"></script>
-		<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-		<script src="~/js/site.js" asp-append-version="true"></script>
-		@RenderSection("Scripts", required: false)
+	<footer class="border-top footer text-muted footer">
+		<div class="container-fluid">
+			&copy; 2021 - Staff Suggestion System
+		</div>
+	</footer>
+	<script src="~/lib/jquery/dist/jquery.min.js"></script>
+	<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="~/js/site.js" asp-append-version="true"></script>
+	@RenderSection("Scripts", required: false)
 </body>
 </html>
