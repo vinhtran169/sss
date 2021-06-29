@@ -1,4 +1,5 @@
-﻿@model IEnumerable<Suggestion>
+﻿@using Microsoft.Data.SqlClient
+@model IEnumerable<Suggestion>
 
 @{
     ViewData["Title"] = "List Suggestion";
@@ -6,16 +7,28 @@
 }
 
 <h2>List Suggest</h2>
+
 <p>
     <a asp-action="CreateSuggestion">Create a suggestion</a>
 </p>
-<table class="table">
+
+@using (Html.BeginForm())
+{
+    <p>
+        Find: @Html.TextBox("searchString")
+        <input type="submit" value="Search">
+    </p>
+}
+
+<table class="table table-striped">
     <thead>
     <tr>
-        <th>Title</th>
+        <th>@Html.ActionLink("Title", "ListSuggestion", new {sortOrder = ViewBag.TitleSort})</th>
         <th>Description</th>
-        <th>Created Date</th>
-        <th>Updated Date</th>
+        <th>@Html.ActionLink("Creator", "ListSuggestion", new {sortOrder = ViewBag.CreatorSort})</th>
+        <th>@Html.ActionLink("Implement Date", "ListSuggestion", new {sortOrder = ViewBag.ImplementSort})</th>
+        <th>@Html.ActionLink("Created Date", "ListSuggestion", new {sortOrder = ViewBag.CreatedSort})</th>
+        <th>@Html.ActionLink("Updated Date", "ListSuggestion", new {sortOrder = ViewBag.UpdatedSort})</th>
         <th/>
         <th/>
         <th/>
@@ -27,6 +40,8 @@
         <tr>
             <td>@s.Title</td>
             <td>@s.Description</td>
+            <td>@s.Creator</td>
+            <td>@s.ImplementDate</td>
             <td>@s.CreatedDate</td>
             <td>@s.UpdatedDate</td>
             <td><a asp-action="EditSuggestion" asp-route-id="@s.Id">Edit</a></td>
