@@ -59,6 +59,12 @@
 </div>
 
 <script>
+    $(function () {
+        $('input[type="text"], textarea').change(function () {
+            this.value = $.trim(this.value);
+        });
+    });
+
     $("#CreateSugguestion").validate({
         rules: {
             Title: {

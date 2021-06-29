@@ -46,6 +46,7 @@ namespace sss.Controllers
             {
                 var user = dbContext.Systemusers.Where(a => a.Username == currentUser).FirstOrDefault(); // get user
                 var router = dbContext.Systemusers.Where(b => b.Role == "Router").FirstOrDefault(); //get router
+
                 if (router == null)
                 {
                     suggestion.Userid = null;
@@ -89,7 +90,7 @@ namespace sss.Controllers
 
                 if(DateTime.Compare(DateTime.Now, (DateTime)suggestion.ImplementDate) >= 0)
                 {
-                    ModelState.AddModelError("ImplementDate", "Please fill in a valid date");
+                    ModelState.AddModelError("ImplementDate", "Please fill in a date in the future");
                     check_valid = false;
                 }
             }
