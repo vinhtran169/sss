@@ -9,53 +9,59 @@ namespace sss.Controllers
 {
     public class SuggestionController : Controller
     {
+        string currentUser = string.Empty;
+
+        public SuggestionController()
+        {
+            currentUser = "admin";
+        }
+
         public IActionResult Index()
         {
             return View();
         }
 
         [HttpGet]
-        [Route("Home/suggest/create")]
+        [Route("home/suggest/create")]
         public IActionResult Create()
         {
-            HttpContext.Session.SetString("username", "admin"); // create a session demo
-
-            string username = HttpContext.Session.GetString("username");
-            if (username != null)
+            if (currentUser != null)
             {
                 return View();
             }
-            else
-            {
-                return RedirectToAction("Login", "Account");
-            }
+            return RedirectToAction("Login", "Account");
         }
+
         [HttpPost]
-        [Route("Home/suggest/create")]
+        [Route("home/suggest/create")]
         public IActionResult Create(Suggestion suggestion)
         {
-
-            if (suggestion.Title != null && suggestion.Description != null && HttpContext.Session.GetString("username") != null)
+            if (suggestion.Title == null || suggestion.Description == null || currentUser == null || ModelState.IsValid == false)
             {
-                using (sssContext dbContext = new sssContext())
+                return View(suggestion);
+            }
+            using (sssContext dbContext = new sssContext())
+            {
+                var user = dbContext.Systemusers.Where(a => a.Username == currentUser).FirstOrDefault(); // get user
+                var router = dbContext.Systemusers.Where(b => b.Role == "Router"); //get list router
+                if (router.FirstOrDefault() == null)
                 {
-                    var user = dbContext.Systemusers.Where(a => a.Username == HttpContext.Session.GetString("username")).FirstOrDefault(); // get user
-                    var router = dbContext.Systemusers.Where(b => b.Role == "Router").FirstOrDefault(); //get router suitable
-
-                    suggestion.CreatedDate = DateTime.Now;
-                    suggestion.UpdatedDate = DateTime.Now;
-                    suggestion.ImplementDate = DateTime.Now;
-                    suggestion.Creator = HttpContext.Session.GetString("username");
-                    suggestion.Userid = router.Userid;
-
-                    dbContext.Suggestions.Add(suggestion);
-                    dbContext.SaveChanges();
+                    suggestion.Userid = null;
                 }
+                else
+                {
+                    var listRouter = router.ToList();
+                    var random = new Random();
+                    suggestion.Userid = listRouter[random.Next(listRouter.Count)].Userid; //get router random
+                }
+                suggestion.CreatedDate = DateTime.Now;
+                suggestion.UpdatedDate = DateTime.Now;
+                suggestion.Creator = currentUser;
+                dbContext.Suggestions.Add(suggestion);
+                dbContext.SaveChanges();
                 Response.Redirect("list");
             }
-
             return View();
         }
     }
-
 }

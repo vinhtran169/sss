@@ -10,8 +10,10 @@
 <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
 <script src="~/lib/autocomplete/bootstrap-4-autocomplete.min.js"></script>
 
-<h3 style="margin-top:10px ;color: #0366d6;">Create Suggestion</h3>
+<link href="~/lib/datetimepicker/bootstrap-datepicker.css" rel="stylesheet" />
+<script src="~/lib/datetimepicker/bootstrap-datepicker.js"></script>
 
+<h3 style="margin-top:10px ;color: #0366d6;">Create Suggestion</h3>
 
 <div class="row" style="margin-right:0px">
     <div class="col-md-8">
@@ -19,7 +21,7 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group" id="parent">
                 <label asp-for="Title" class="control-label"></label>
-                <input id="myAutocomplete" asp-for="Title" class="form-control" />
+                <input id="myAutocomplete" asp-for="Title" class="form-control" type="text" />
                 <span asp-validation-for="Title" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -28,11 +30,22 @@
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="ImplementDate" class="control-label"></label>
+                <div id="sandbox-container">
+                    <input asp-for="ImplementDate" type="text" class="form-control" value="@DateTime.Today.ToString("yyyy-MM-dd")">
+                </div>
+                <span asp-validation-for="ImplementDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <label asp-for="CreatedDate" class="control-label"></label>
-                <input asp-for="CreatedDate" class="form-control" type="date" value="@DateTime.Today.ToString("yyyy-MM-dd")" readonly />
+                <input asp-for="CreatedDate" type="text" class="form-control" value="@DateTime.Today.ToString("yyyy-MM-dd")" readonly>
                 <span asp-validation-for="CreatedDate" class="text-danger"></span>
             </div>
-
+            <div class="form-group">
+                <label asp-for="UpdatedDate" class="control-label"></label>
+                <input asp-for="UpdatedDate" type="text" class="form-control" value="@DateTime.Today.ToString("yyyy-MM-dd")" readonly>
+                <span asp-validation-for="UpdatedDate" class="text-danger"></span>
+            </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
                 <input type="button" value="Clear" class="btn btn-secondary" onClick="clearIt()" />
@@ -42,22 +55,29 @@
     </div>
 </div>
 
-
 <script>
     function clearIt() {
         document.getElementById('description').value = "";
         document.getElementById('myAutocomplete').value = "";
     }
+
+    $('#sandbox-container input').datepicker({
+        todayBtn: "linked",
+        todayHighlight: true,
+        format: "yyyy-mm-dd",
+        autoclose: true,
+    });
+
     var src = {
         "Đóng góp ý kiến về vấn đề": 1,
         "Thắc mắc về vấn đề nhân sự": 2,
-        "Thắc mắc về vấn đề lương thưởng": 2,
-        "Thắc mắc về vấn đề nghĩ phép": 2,
-        "các thiết bị": 3,
+        "Thắc mắc về vấn đề lương thưởng": 3,
+        "Thắc mắc về vấn đề nghĩ phép": 4,
+        "các thiết bị": 5,
     }
 
     function onSelectItem() {
-        document.getElementById("myAutocomplete").focus();
+        $('#myAutocomplete').focus();
     }
 
     $('#myAutocomplete').autocomplete({
