@@ -29,6 +29,7 @@ namespace sss.Controllers
             {
                 return View();
             }
+
             return RedirectToAction("Login", "Account");
         }
 
@@ -36,24 +37,24 @@ namespace sss.Controllers
         [Route("home/suggest/create")]
         public IActionResult Create(Suggestion suggestion)
         {
-            if (suggestion.Title == null || suggestion.Description == null || currentUser == null || ModelState.IsValid == false)
+            if (!ValidateSuguestion(suggestion))
             {
                 return View(suggestion);
             }
+
             using (sssContext dbContext = new sssContext())
             {
                 var user = dbContext.Systemusers.Where(a => a.Username == currentUser).FirstOrDefault(); // get user
-                var router = dbContext.Systemusers.Where(b => b.Role == "Router"); //get list router
-                if (router.FirstOrDefault() == null)
+                var router = dbContext.Systemusers.Where(b => b.Role == "Router").FirstOrDefault(); //get router
+                if (router == null)
                 {
                     suggestion.Userid = null;
                 }
                 else
                 {
-                    var listRouter = router.ToList();
-                    var random = new Random();
-                    suggestion.Userid = listRouter[random.Next(listRouter.Count)].Userid; //get router random
+                    suggestion.Userid = router.Userid;
                 }
+
                 suggestion.CreatedDate = DateTime.Now;
                 suggestion.UpdatedDate = DateTime.Now;
                 suggestion.Creator = currentUser;
@@ -61,7 +62,39 @@ namespace sss.Controllers
                 dbContext.SaveChanges();
                 Response.Redirect("list");
             }
+
             return View();
+        }
+
+        private bool ValidateSuguestion(Suggestion suggestion)
+        {
+            bool check_valid = true;
+
+            using (sssContext dbContext = new sssContext())
+            {
+                var title = dbContext.Suggestions.Where(a => a.Title == suggestion.Title).FirstOrDefault();
+                var description = dbContext.Suggestions.Where(b => b.Description == suggestion.Description).FirstOrDefault();
+
+                if(title != null)
+                {
+                    ModelState.AddModelError("Title", "This title suggestion is exist");
+                    check_valid = false;
+                }
+
+                if(description != null)
+                {
+                    ModelState.AddModelError("Description", "This description suggestion is exist");
+                    check_valid = false;
+                }
+
+                if(DateTime.Compare(DateTime.Now, (DateTime)suggestion.ImplementDate) >= 0)
+                {
+                    ModelState.AddModelError("ImplementDate", "Please fill in a valid date");
+                    check_valid = false;
+                }
+            }
+
+            return check_valid;
         }
     }
 }
