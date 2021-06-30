@@ -1,5 +1,6 @@
-﻿@using Microsoft.Data.SqlClient
-@model IEnumerable<Suggestion>
+﻿@model X.PagedList.IPagedList<Suggestion>
+@using X.PagedList.Mvc.Core
+@using X.PagedList.Web.Common
 
 @{
     ViewData["Title"] = "List Suggestion";
@@ -12,10 +13,10 @@
     <a asp-action="CreateSuggestion">Create a suggestion</a>
 </p>
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("ListSuggestion", "Suggestion", FormMethod.Get))
 {
     <p>
-        Find: @Html.TextBox("searchString")
+        Find: @Html.TextBox("searchString", ViewBag.CurrentFilter as string)
         <input type="submit" value="Search">
     </p>
 }
@@ -23,9 +24,9 @@
 <table class="table table-striped">
     <thead>
     <tr>
-        <th>@Html.ActionLink("Title", "ListSuggestion", new {sortOrder = ViewBag.TitleSort})</th>
-        <th>Description</th>
-        <th>@Html.ActionLink("Creator", "ListSuggestion", new {sortOrder = ViewBag.CreatorSort})</th>
+        <th>@Html.ActionLink("Title", "ListSuggestion", new {sortOrder = ViewBag.TitleSort, currentFilter = ViewBag.CurrentFilter})</th>
+        <th>@Html.ActionLink("Description", "ListSuggestion", new {currentFilter = ViewBag.CurrentFilter})</th>
+        <th>@Html.ActionLink("Creator", "ListSuggestion", new {sortOrder = ViewBag.CreatorSort, currentFilter = ViewBag.CurrentFilter})</th>
         <th>@Html.ActionLink("Implement Date", "ListSuggestion", new {sortOrder = ViewBag.ImplementSort})</th>
         <th>@Html.ActionLink("Created Date", "ListSuggestion", new {sortOrder = ViewBag.CreatedSort})</th>
         <th>@Html.ActionLink("Updated Date", "ListSuggestion", new {sortOrder = ViewBag.UpdatedSort})</th>
@@ -51,3 +52,10 @@
     }
     </tbody>
 </table>
+
+<br/>
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("ListSuggestion", 
+    new {page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter}), 
+    new PagedListRenderOptions {LiElementClasses = new string[] {"page-item"}, PageClasses = new string[] {"page-link"}})

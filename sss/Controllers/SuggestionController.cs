@@ -2,6 +2,7 @@
 using System.Linq;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using X.PagedList;
 using sss.Models;
 
 namespace sss.Controllers
@@ -9,7 +10,7 @@ namespace sss.Controllers
     public class SuggestionController : Controller
     {
         [Route("home/suggest/list")]
-        public IActionResult ListSuggestion(string sortOrder, string searchString)
+        public IActionResult ListSuggestion(string sortOrder, string searchString, string currentFilter, int? page)
         {
             HttpContext.Session.SetString("username", "admin"); //temp session
             string username = HttpContext.Session.GetString("username");
@@ -17,9 +18,15 @@ namespace sss.Controllers
             if (username != null)
                 using (sssContext dbContext = new sssContext())
                 {
+                    ViewBag.CurrentSort = sortOrder;
                     ViewBag.TitleSort = "title";
                     ViewBag.CreatedSort = "created";
                     ViewBag.UpdatedSort = "updated";
+
+                    if (searchString != null) page = 1;
+                    else searchString = currentFilter;
+                    ViewBag.CurrentFilter = searchString;
+                    
                     var listSuggest = from s in dbContext.Suggestions select s;
                     if (!String.IsNullOrEmpty(searchString))
                     {
@@ -27,6 +34,7 @@ namespace sss.Controllers
                                                              || s.Description.Contains(searchString)
                                                              || s.Creator.Contains(searchString));
                     }
+                    
                     switch (sortOrder)
                     {
                         case "title":
@@ -39,7 +47,10 @@ namespace sss.Controllers
                             listSuggest = listSuggest.OrderBy(s => s.UpdatedDate);
                             break;
                     }
-                    return View(listSuggest.ToList());
+
+                    int pageSize = 5;
+                    int pageNumber = (page ?? 1);
+                    return View(listSuggest.ToPagedList(pageNumber, pageSize));
                 }
             else
             {
