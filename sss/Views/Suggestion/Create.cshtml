@@ -4,17 +4,15 @@
     ViewData["Title"] = "CreateSuggest";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@*autocomplete text input*@
 <script src="~/lib/autocomplete/jquery-3.5.1.slim.min.js"></script>
 <script src="~/lib/autocomplete/popper.min.js"></script>
 <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
 <script src="~/lib/autocomplete/bootstrap-4-autocomplete.min.js"></script>
 
+@*datetimepicker lib*@
 <link href="~/lib/datetimepicker/bootstrap-datepicker.css" rel="stylesheet" />
 <script src="~/lib/datetimepicker/bootstrap-datepicker.js"></script>
-
-<script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
-<script src="~/lib/jquery-validation/dist/additional-methods.js"></script>
-<link href="~/css/site-create-suguestion.css" rel="stylesheet" />
 
 <h3 style="margin-top:10px ;color: #0366d6;">Create Suggestion</h3>
 
@@ -24,7 +22,7 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group" id="parent">
                 <label asp-for="Title" class="control-label"></label>
-                <input id="Title" name="Title" asp-for="Title" class="form-control" type="text" />
+                <input id="Title" name="Title" asp-for="Title" class="form-control" type="text"/>
                 <span asp-validation-for="Title" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -59,50 +57,13 @@
 </div>
 
 <script>
-    $(function () {
-        $('input[type="text"], textarea').change(function () {
-            this.value = $.trim(this.value);
-        });
-    });
-
-    $("#CreateSugguestion").validate({
-        rules: {
-            Title: {
-                required: true,
-                minlength: 10,
-                maxlength: 100
-            },
-            Description: {
-                required: true,
-                minlength: 10
-            },
-            ImplementDate: {
-                required: true,
-                date: true
-            }
-        },
-
-        messages: {
-            Title: {
-                required: "Please fill title for this suggestion",
-                minlength: "Please lengthen title to 10 characters or more"
-            },
-            Description: {
-                required: "Please fill description for this suggestion",
-                minlength: "Please lengthen description to 10 characters or more"
-            },
-            ImplementDate: {
-                required: "Please fill implement date for this suggestion",
-                date: "Please enter a valid date"
-            }
-        }
-    });
-
+    // Clear input text field
     function clearIt() {
         document.getElementById('Description').value = "";
         document.getElementById('Title').value = "";
     }
 
+    //  Onclick open calender input text with bootstrap-datepicker
     $('#sandbox-container input').datepicker({
         todayBtn: "linked",
         todayHighlight: true,
@@ -110,7 +71,8 @@
         autoclose: true,
     });
 
-    var src = {
+    // List autocomplete suguestion
+    var list_autocomlete = {
         "Đóng góp ý kiến về vấn đề": 1,
         "Thắc mắc về vấn đề nhân sự": 2,
         "Thắc mắc về vấn đề lương thưởng": 3,
@@ -122,8 +84,9 @@
         $('#Title').focus();
     }
 
+    // Autocomplete for input title with bootstrap-4-autocomplete
     $('#Title').autocomplete({
-        source: src,
+        source: list_autocomlete,
         onSelectItem: onSelectItem,
         highlightClass: 'text-danger',
         treshold: 2,

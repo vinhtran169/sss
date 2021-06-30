@@ -7,13 +7,16 @@ using sss.Models;
 using Microsoft.AspNetCore.Http;
 namespace sss.Controllers
 {
+    /// <summary>
+    /// Provides functionality to the /home/suggest.
+    /// </summary>
     public class SuggestionController : Controller
     {
-        string currentUser = string.Empty;
+        string currentUser = string.Empty; 
 
         public SuggestionController()
         {
-            currentUser = "admin";
+            currentUser = "admin"; // Get username from session value
         }
 
         public IActionResult Index()
@@ -25,6 +28,7 @@ namespace sss.Controllers
         [Route("home/suggest/create")]
         public IActionResult Create()
         {
+            // Check is session exist
             if (currentUser != null)
             {
                 return View();
@@ -37,6 +41,7 @@ namespace sss.Controllers
         [Route("home/suggest/create")]
         public IActionResult Create(Suggestion suggestion)
         {
+            // Validate suggestion
             if (!ValidateSuguestion(suggestion))
             {
                 return View(suggestion);
@@ -44,9 +49,10 @@ namespace sss.Controllers
 
             using (sssContext dbContext = new sssContext())
             {
-                var user = dbContext.Systemusers.Where(a => a.Username == currentUser).FirstOrDefault(); // get user
-                var router = dbContext.Systemusers.Where(b => b.Role == "Router").FirstOrDefault(); //get router
+                var user = dbContext.Systemusers.Where(a => a.Username == currentUser).FirstOrDefault(); // get user with session value
+                var router = dbContext.Systemusers.Where(b => b.Role == "Router").FirstOrDefault(); // get router from list user
 
+                // Assign router for sugguestion
                 if (router == null)
                 {
                     suggestion.Userid = null;
@@ -59,36 +65,71 @@ namespace sss.Controllers
                 suggestion.CreatedDate = DateTime.Now;
                 suggestion.UpdatedDate = DateTime.Now;
                 suggestion.Creator = currentUser;
+
                 dbContext.Suggestions.Add(suggestion);
                 dbContext.SaveChanges();
-                Response.Redirect("list");
+
+                Response.Redirect("list"); // Return path "home/suggest/list"
             }
 
             return View();
         }
 
+        // This function validate suguestion and return a bool value
         private bool ValidateSuguestion(Suggestion suggestion)
         {
             bool check_valid = true;
 
+            string suggest_title = suggestion.Title;
+            string suggest_description = suggestion.Description;
+
             using (sssContext dbContext = new sssContext())
             {
+                // Get value from database that same input suguest
                 var title = dbContext.Suggestions.Where(a => a.Title == suggestion.Title).FirstOrDefault();
                 var description = dbContext.Suggestions.Where(b => b.Description == suggestion.Description).FirstOrDefault();
 
-                if(title != null)
+                // Validate title title field
+                if(suggest_title == null)
+                {
+                    ModelState.AddModelError("Title", "Please fill title for this suggestion");
+                    check_valid = false;
+                }
+                else if(suggest_title.Trim().Length < 10)
+                {
+                    ModelState.AddModelError("Title", "Please lengthen title to 10 characters or more");
+                    check_valid = false;
+                }
+                else if(title != null)
                 {
                     ModelState.AddModelError("Title", "This title suggestion is exist");
                     check_valid = false;
                 }
 
-                if(description != null)
+                // Validate description field
+                if (suggest_description == null)
+                {
+                    ModelState.AddModelError("Description", "Please fill description for this suggestion");
+                    check_valid = false;
+                }
+                else if (suggest_description.Trim().Length < 10)
+                {
+                    ModelState.AddModelError("Description", "Please lengthen description to 10 characters or more");
+                    check_valid = false;
+                }
+                else if (description != null)
                 {
                     ModelState.AddModelError("Description", "This description suggestion is exist");
                     check_valid = false;
                 }
 
-                if(DateTime.Compare(DateTime.Now, (DateTime)suggestion.ImplementDate) >= 0)
+                // Validate ImplementDate field
+                if(suggestion.ImplementDate == null)
+                {
+                    ModelState.AddModelError("ImplementDate", "Please fill implement date for this suggestion");
+                    check_valid = false;
+                }
+                else if(DateTime.Compare(DateTime.Now, (DateTime)suggestion.ImplementDate) >= 0)
                 {
                     ModelState.AddModelError("ImplementDate", "Please fill in a date in the future");
                     check_valid = false;
