@@ -42,7 +42,7 @@ namespace sss.Controllers
 
             using (sssContext dbContext = new sssContext())
             {
-                bool existUser = dbContext.Systemusers.Any(user => user.Username == username);
+                bool existUser = dbContext.Accounts.Any(user => user.Username == username && user.Password == password);
 
                 if (existUser)
                 {
@@ -79,10 +79,11 @@ namespace sss.Controllers
 
             using (sssContext dbContext = new sssContext())
             {
-                Systemuser objEmp = new Systemuser();
+                Account objEmp = new Account();
                 objEmp.Username = username;
+                objEmp.Password = password;
 
-                dbContext.Systemusers.Add(objEmp);
+                dbContext.Accounts.Add(objEmp);
                 dbContext.SaveChanges();
             }
 
