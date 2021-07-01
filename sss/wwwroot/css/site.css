@@ -59,8 +59,9 @@ html {
 }
 
 body {
-  /* Margin bottom by footer height */
-  margin-bottom: 60px;
+    /* Margin bottom by footer height */
+    margin-bottom: 60px;
+    background-color: #f6f6f6;
 }
 .footer {
   position: absolute;
@@ -68,4 +69,56 @@ body {
   width: 100%;
   white-space: nowrap;
   line-height: 60px; /* Vertically center the text there */
+}
+
+#suggestion,#administrator{
+    margin-left:10px;
+}
+
+#downcircle{
+    font-weight: bold;
+    font-size:20px
+
+}
+.menu li {
+    padding: 10px 15px;
+}
+.menu li:hover{
+    background-color:lightgray;
+}
+.menu li a{
+     text-decoration: none;
+     color:mediumblue;
+     margin-left:10px;
+     font-weight:bolder;
+
+ }
+
+ .menu{
+     margin-left: -15px;
+ }
+.menu ul li a{
+    font-size: 15px;
+    margin-left:10px;
+    font-weight:400;
+}
+
+.navbar-right-account{
+    margin-left: 30px;
+}
+.logo {
+    background-color: darkslategrey;
+    display:inline-block;
+}
+
+.footer {
+    background-color: #212529;
+}
+
+.progress-bar-color {
+    background-color: #0f0485;
+}
+
+.current {
+    background-color:lightgray;
 }

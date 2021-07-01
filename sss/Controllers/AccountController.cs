@@ -25,6 +25,13 @@ namespace sss.Controllers
             return View();
         }
 
+        [HttpGet]
+		public IActionResult Register()
+        {
+            return View();
+        }
+
+
         public new bool IsPostBack
         {
             get
@@ -64,13 +71,9 @@ namespace sss.Controllers
             return RedirectToAction("login");
         }
 
-        [HttpGet]
-        public IActionResult Register()
-        {
-            return View();
-        }
+        
 
-        [Route("register")]
+        [Route("Account/Register")]
         [HttpPost]
         public IActionResult Register(IFormCollection forms)
         {
@@ -85,9 +88,10 @@ namespace sss.Controllers
 
                 dbContext.Accounts.Add(objEmp);
                 dbContext.SaveChanges();
+                ViewData["success"] = "OK dang ki thanh cong";
             }
-
-            return View("ListAccount");
+           
+            return View();
         }
 
 
