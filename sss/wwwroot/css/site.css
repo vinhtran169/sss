@@ -83,25 +83,24 @@ body {
 .menu li {
     padding: 10px 15px;
 }
-.menu li:hover{
+.menu ul li:hover{
     background-color:lightgray;
 }
-.menu li a{
-     text-decoration: none;
+.menu li {
+     
      color:mediumblue;
-     margin-left:10px;
-     font-weight:bolder;
-
+     font-weight:500;
  }
 
  .menu{
      margin-left: -15px;
  }
-.menu ul li a{
-    font-size: 15px;
-    margin-left:10px;
-    font-weight:400;
-}
+ .menu ul li a {
+     text-decoration: none;
+     font-size: 15px;
+     margin-left: 10px;
+     font-weight: 400;
+    }
 
 .navbar-right-account{
     margin-left: 30px;
