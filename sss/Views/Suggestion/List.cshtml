@@ -1,0 +1,82 @@
+﻿@model X.PagedList.IPagedList<Suggestion>
+@using X.PagedList.Mvc.Core
+@using X.PagedList.Web.Common
+
+@{
+    ViewData["Title"] = "List Suggestion";
+    Layout = "_Layout";
+}
+
+<h2 style="margin-top: 10px; margin-bottom: 10px; color: mediumblue;">List Suggestion</h2>
+
+<p>
+    <a asp-action="Create">Create a suggestion</a>
+</p>
+
+@using (Html.BeginForm("List", "Suggestion", FormMethod.Get))
+{
+    <div style="margin-bottom: 10px;">
+        Find: @Html.TextBox("searchString", ViewBag.CurrentFilter as string)
+        <input type="submit" value="Search">
+    </div>
+}
+
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th>
+            @Html.ActionLink("Title", "List", 
+                new {sortOrder = ViewBag.TitleSort, currentFilter = ViewBag.CurrentFilter})
+        </th>
+        <th>
+            @Html.ActionLink("Description", "List", 
+                new {sortOrder = ViewBag.DescriptionSort, currentFilter = ViewBag.CurrentFilter})
+        </th>
+        <th>
+            @Html.ActionLink("Creator", "List", 
+                new {sortOrder = ViewBag.CreatorSort, currentFilter = ViewBag.CurrentFilter})
+        </th>
+        <th>
+            @Html.ActionLink("Implement Date", "List", 
+                new {sortOrder = ViewBag.ImplementSort})
+        </th>
+        <th>
+            @Html.ActionLink("Created Date", "List", 
+                new {sortOrder = ViewBag.CreatedSort})
+        </th>
+        <th>
+            @Html.ActionLink("Updated Date", "List", 
+                new {sortOrder = ViewBag.UpdatedSort})
+        </th>
+        <th/>
+        <th/>
+        <th/>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (Suggestion s in Model)
+    {
+        <tr>
+            <td>@s.Title</td>
+            <td>@s.Description</td>
+            <td>@s.Creator</td>
+            <td>@s.ImplementDate</td>
+            <td>@s.CreatedDate</td>
+            <td>@s.UpdatedDate</td>
+            <td><a asp-action="Edit" asp-route-id="@s.Id">Edit</a></td>
+            <td><a asp-action="Details" asp-route-id="@s.Id">Details</a></td>
+            <td><a asp-action="Delete" asp-route-id="@s.Id">Delete</a></td>
+        </tr>
+    }
+    </tbody>
+</table>
+
+<div style="display: flex; justify-content: center;">
+    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+</div>
+
+<div style="display: flex; justify-content: center; margin-top: 5px;">
+    @Html.PagedListPager(Model, page => Url.Action("List",
+        new {page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter}),
+        new PagedListRenderOptions {LiElementClasses = new string[] {"page-item"}, PageClasses = new string[] {"page-link"}})
+</div>

@@ -142,7 +142,7 @@ namespace sss.Controllers
         }
         
         [Route("home/suggest/list")]
-        public IActionResult ListSuggestion(string sortOrder, string searchString, string currentFilter, int? page)
+        public IActionResult List(string sortOrder, string searchString, string currentFilter, int? page)
         {
             HttpContext.Session.SetString("username", "admin"); //temp session
             string username = HttpContext.Session.GetString("username");
@@ -152,6 +152,9 @@ namespace sss.Controllers
                 {
                     ViewBag.CurrentSort = sortOrder;
                     ViewBag.TitleSort = "title";
+                    ViewBag.DescriptionSort = "description";
+                    ViewBag.CreatorSort = "creator";
+                    ViewBag.ImplementSort = "implement";
                     ViewBag.CreatedSort = "created";
                     ViewBag.UpdatedSort = "updated";
 
@@ -172,11 +175,20 @@ namespace sss.Controllers
                         case "title":
                             listSuggest = listSuggest.OrderBy(s => s.Title);
                             break;
-                        case "created":
-                            listSuggest = listSuggest.OrderBy(s => s.CreatedDate);
+                        case "description":
+                            listSuggest = listSuggest.OrderBy(s => s.Description);
                             break;
-                        case "updated":
-                            listSuggest = listSuggest.OrderBy(s => s.UpdatedDate);
+                        case "creator":
+                            listSuggest = listSuggest.OrderBy(s => s.Creator);
+                            break;
+                        case "implement":
+                            listSuggest = listSuggest.OrderByDescending(s => s.ImplementDate);
+                            break;
+                        case "created":
+                            listSuggest = listSuggest.OrderByDescending(s => s.CreatedDate);
+                            break;
+                        default:
+                            listSuggest = listSuggest.OrderByDescending(s => s.UpdatedDate);
                             break;
                     }
 
@@ -188,21 +200,6 @@ namespace sss.Controllers
             {
                 return RedirectToAction("Login", "Account");
             }
-        }
-
-        public IActionResult EditSuggestion()
-        {
-            return View();
-        }
-        
-        public IActionResult DetailsSuggestion()
-        {
-            return View();
-        }
-        
-        public IActionResult DeleteSuggestion()
-        {
-            return View();
         }
     }
 }
