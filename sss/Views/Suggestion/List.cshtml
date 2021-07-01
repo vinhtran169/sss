@@ -25,28 +25,28 @@
     <thead>
     <tr>
         <th>
-            @Html.ActionLink("Title", "List", 
-                new {sortOrder = ViewBag.TitleSort, currentFilter = ViewBag.CurrentFilter})
+            @Html.ActionLink(ViewBag.CurrentSort == "title" ? "Title ▼" : "Title", 
+                "List", new {sortOrder = ViewBag.TitleSort, currentFilter = ViewBag.CurrentFilter})
         </th>
         <th>
-            @Html.ActionLink("Description", "List", 
-                new {sortOrder = ViewBag.DescriptionSort, currentFilter = ViewBag.CurrentFilter})
+            @Html.ActionLink(ViewBag.CurrentSort == "description" ? "Description ▼" : "Description", 
+                "List", new {sortOrder = ViewBag.DescriptionSort, currentFilter = ViewBag.CurrentFilter})
         </th>
         <th>
-            @Html.ActionLink("Creator", "List", 
-                new {sortOrder = ViewBag.CreatorSort, currentFilter = ViewBag.CurrentFilter})
+            @Html.ActionLink(ViewBag.CurrentSort == "creator" ? "Creator ▼" : "Creator", 
+                "List", new {sortOrder = ViewBag.CreatorSort, currentFilter = ViewBag.CurrentFilter})
         </th>
         <th>
-            @Html.ActionLink("Implement Date", "List", 
-                new {sortOrder = ViewBag.ImplementSort})
+            @Html.ActionLink(ViewBag.CurrentSort == "implement" ? "Implement Date ▼" : "Implement Date", 
+                "List", new {sortOrder = ViewBag.ImplementSort})
         </th>
         <th>
-            @Html.ActionLink("Created Date", "List", 
-                new {sortOrder = ViewBag.CreatedSort})
+            @Html.ActionLink(ViewBag.CurrentSort == "created" ? "Created Date ▼" : "Created Date", 
+                "List", new {sortOrder = ViewBag.CreatedSort})
         </th>
         <th>
-            @Html.ActionLink("Updated Date", "List", 
-                new {sortOrder = ViewBag.UpdatedSort})
+            @Html.ActionLink(ViewBag.CurrentSort == "updated" || ViewBag.CurrentSort == null ? "Updated Date ▼" : "Updated Date", 
+                "List", new {sortOrder = ViewBag.UpdatedSort})
         </th>
         <th/>
         <th/>
