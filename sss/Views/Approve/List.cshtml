@@ -1,0 +1,80 @@
+﻿@model X.PagedList.IPagedList<Suggestion>
+@using X.PagedList.Mvc.Core
+@using X.PagedList.Web.Common
+
+@{
+    ViewData["Title"] = "My Approve";
+    Layout = "_Layout";
+}
+
+<h2 style="margin-top: 10px; margin-bottom: 10px; color: mediumblue;">My approve <span style="font-size:12px; color: brown">@ViewBag.Role</span></h2>
+
+@using (Html.BeginForm("List", "Suggestion", FormMethod.Get))
+{
+    <div style="margin-bottom: 10px;">
+        Find: @Html.TextBox("searchString", ViewBag.CurrentFilter as string)
+        <input type="submit" value="Search">
+    </div>
+}
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>
+                @Html.ActionLink(ViewBag.CurrentSort == "title" ? "Title ▼" : "Title",
+                    "List", new { sortOrder = ViewBag.TitleSort, currentFilter = ViewBag.CurrentFilter })
+            </th>
+            <th>
+                @Html.ActionLink(ViewBag.CurrentSort == "description" ? "Description ▼" : "Description",
+                    "List", new { sortOrder = ViewBag.DescriptionSort, currentFilter = ViewBag.CurrentFilter })
+            </th>
+            <th>
+                @Html.ActionLink(ViewBag.CurrentSort == "creator" ? "Creator ▼" : "Creator",
+                    "List", new { sortOrder = ViewBag.CreatorSort, currentFilter = ViewBag.CurrentFilter })
+            </th>
+            <th>
+                @Html.ActionLink(ViewBag.CurrentSort == "implement" ? "Implement Date ▼" : "Implement Date",
+                    "List", new { sortOrder = ViewBag.ImplementSort })
+            </th>
+            <th>
+                @Html.ActionLink(ViewBag.CurrentSort == "created" ? "Created Date ▼" : "Created Date",
+                    "List", new { sortOrder = ViewBag.CreatedSort })
+            </th>
+            <th>
+                @Html.ActionLink(ViewBag.CurrentSort == "updated" || ViewBag.CurrentSort == null ? "Updated Date ▼" : "Updated Date",
+                    "List", new { sortOrder = ViewBag.UpdatedSort })
+            </th>
+            
+            <th />
+            <th />
+            <th />
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (Suggestion s in Model)
+        {
+        <tr>
+            <td>@s.Title</td>
+            <td>@s.Description</td>
+            <td>@s.Creator</td>
+            <td>@s.ImplementDate</td>
+            <td>@s.CreatedDate</td>
+            <td>@s.UpdatedDate</td>
+            
+            
+             <td><a asp-action="Actions" asp-route-id="@s.Id">Actions</a></td>
+            
+        </tr>
+        }
+    </tbody>
+</table>
+
+<div style="display: flex; justify-content: center;">
+    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+</div>
+
+<div style="display: flex; justify-content: center; margin-top: 5px;">
+    @Html.PagedListPager(Model, page => Url.Action("List",
+        new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }),
+        new PagedListRenderOptions { LiElementClasses = new string[] { "page-item" }, PageClasses = new string[] { "page-link" } })
+</div>
