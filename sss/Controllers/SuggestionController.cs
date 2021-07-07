@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using sss.Models;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using X.PagedList;
+using sss.Models;
+
 namespace sss.Controllers
 {
     /// <summary>
@@ -137,6 +139,73 @@ namespace sss.Controllers
             }
 
             return check_valid;
+        }
+        
+        [Route("home/suggest/list")]
+        public IActionResult List(string sortOrder, string searchString, string currentFilter, int? page)
+        {
+            HttpContext.Session.SetString("username", "admin"); //temp session
+            string username = HttpContext.Session.GetString("username");
+
+            if (username == null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+            
+            using (sssContext dbContext = new sssContext())
+            {
+                ViewBag.CurrentSort = sortOrder;
+                ViewBag.TitleSort = "title";
+                ViewBag.DescriptionSort = "description";
+                ViewBag.CreatorSort = "creator";
+                ViewBag.ImplementSort = "implement";
+                ViewBag.CreatedSort = "created";
+                ViewBag.UpdatedSort = "updated";
+
+                if (searchString != null)
+                {
+                    page = 1;
+                }
+                else
+                {
+                    searchString = currentFilter;
+                }
+                ViewBag.CurrentFilter = searchString;
+
+                var listSuggest = from s in dbContext.Suggestions select s;
+                if (!String.IsNullOrEmpty(searchString))
+                {
+                    listSuggest = listSuggest.Where(s => s.Title.Contains(searchString)
+                                                         || s.Description.Contains(searchString)
+                                                         || s.Creator.Contains(searchString));
+                }
+
+                switch (sortOrder)
+                {
+                    case "title":
+                        listSuggest = listSuggest.OrderBy(s => s.Title);
+                        break;
+                    case "description":
+                        listSuggest = listSuggest.OrderBy(s => s.Description);
+                        break;
+                    case "creator":
+                        listSuggest = listSuggest.OrderBy(s => s.Creator);
+                        break;
+                    case "implement":
+                        listSuggest = listSuggest.OrderByDescending(s => s.ImplementDate);
+                        break;
+                    case "created":
+                        listSuggest = listSuggest.OrderByDescending(s => s.CreatedDate);
+                        break;
+                    default:
+                        listSuggest = listSuggest.OrderByDescending(s => s.UpdatedDate);
+                        break;
+                }
+
+                int pageSize = 5;
+                int pageNumber = (page ?? 1);
+                return View(listSuggest.ToPagedList(pageNumber, pageSize));
+            }
         }
     }
 }
