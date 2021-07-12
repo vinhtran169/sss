@@ -1,7 +1,7 @@
 ﻿@model sss.Models.Suggestion
 
 @{
-    ViewData["Title"] = "Acctions Suggestion";
+    ViewData["Title"] = "Actions Suggestion";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -92,13 +92,8 @@
             }
             <div class="form-group">
                 <input type="submit" value="Submit" class="btn btn-primary" />
-                <button class="btn btn-danger">Reject</button>
                 <input type="button" value="Cancel" onclick="@("window.location.href='" + @Url.Action("Index", "Home") + "'");" class="btn btn-outline-success" />
             </div>
         </form>
     </div>
 </div>
-
-<script>
-
-</script>

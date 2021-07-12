@@ -18,17 +18,12 @@ namespace sss.Controllers
 
         public ApproveController()
         {
-            currentUser = "nguyenvana"; // Get username from session value
+            currentUser = "manager"; // Get username from session value
         }
 
-        public IActionResult Index()
-        {
-            return View();
-        }
-
-        [HttpGet]       
+        [HttpGet]
         [Route("home/approve/list")]
-        public IActionResult List(string sortOrder, string searchString, string currentFilter, int? page)
+        public IActionResult List(int page = 1, string orderby = "topic", bool dsc = true)
         {
             if (currentUser == null)
             {
@@ -39,62 +34,96 @@ namespace sss.Controllers
             {
                 var user = dbContext.Systemusers.Where(a => a.Username == currentUser).FirstOrDefault(); // get user with session value
 
-                if(user.Role.Trim() == "Suggestor")
+                if (user.Role.Trim() == "Suggestor")
                 {
                     return View("~/Views/Shared/NotFound.cshtml");
                 }
 
-                ViewBag.CurrentSort = sortOrder;
-                ViewBag.TitleSort = "title";
-                ViewBag.DescriptionSort = "description";
-                ViewBag.CreatorSort = "creator";
-                ViewBag.ImplementSort = "implement";
-                ViewBag.CreatedSort = "created";
-                ViewBag.UpdatedSort = "updated";
-                ViewBag.Role = user.Role.Trim();
-                if (searchString != null)
-                {
-                    page = 1;
-                }
-                else
-                {
-                    searchString = currentFilter;
-                }
-                ViewBag.CurrentFilter = searchString;
+                var suggestions = dbContext.Suggestions.Where(s => s.Userid == user.Userid && s.StatusType == null).ToList(); // get list suggestion suitable
+                var model = Paging(suggestions, page, orderby.Trim(), dsc);
 
-                var listSuggest = from s in dbContext.Suggestions select s;
-                if (!String.IsNullOrEmpty(searchString))
+                ViewData["Pages"] = model.pages;
+                ViewData["Page"] = model.page;
+                ViewData[orderby.Trim()] = !dsc;
+                ViewBag.Current = orderby.Trim();
+
+                if (page > model.pages && model.pages != 0)
                 {
-                    listSuggest = listSuggest.Where(s => s.Title.Contains(searchString) || s.Description.Contains(searchString) || s.Creator.Contains(searchString));
+                    return View("~/Views/Shared/NotFound.cshtml"); // Not Found
                 }
 
-                switch (sortOrder)
+                return View(model.suggestions);
+            }
+        }
+
+        public static (List<Suggestion> suggestions, int pages, int page) Paging(List<Suggestion> Suggestions, int page, string orderby= "topic", bool dsc = true)
+        {
+            int size = 10;
+            int pages = (int)Math.Ceiling((double)Suggestions.Count / size);
+            var suggestions = Suggestions.Skip((page - 1) * size).Take(size).ToList();
+
+            if (dsc)
+            {
+                switch (orderby)
                 {
-                    case "title":
-                        listSuggest = listSuggest.OrderBy(s => s.Title);
-                        break;
-                    case "description":
-                        listSuggest = listSuggest.OrderBy(s => s.Description);
-                        break;
-                    case "creator":
-                        listSuggest = listSuggest.OrderBy(s => s.Creator);
-                        break;
-                    case "implement":
-                        listSuggest = listSuggest.OrderByDescending(s => s.ImplementDate);
-                        break;
-                    case "created":
-                        listSuggest = listSuggest.OrderByDescending(s => s.CreatedDate);
-                        break;
-                    default:
-                        listSuggest = listSuggest.OrderByDescending(s => s.UpdatedDate);
-                        break;
+                    case "topic": suggestions = suggestions.OrderBy(s => s.Title).ToList(); break;
+                    case "description": suggestions = suggestions.OrderBy(s => s.Description).ToList(); break;
+                    case "implementdate": suggestions = suggestions.OrderBy(s => s.ImplementDate).ToList(); break;
+                    case "creator": suggestions = suggestions.OrderBy(s => s.Creator).ToList(); break;
+                    case "createddate": suggestions = suggestions.OrderBy(s => s.CreatedDate).ToList(); break;
+                    case "updateddate": suggestions = suggestions.OrderBy(s => s.UpdatedDate.ToString()).ToList(); break;
                 }
-                
-                listSuggest = listSuggest.Where(s => s.Userid == user.Userid && s.StatusType == null);
-     
-                int pageSize = 5;
-                int pageNumber = (page ?? 1);
-                return View(listSuggest.ToPagedList(pageNumber, pageSize));
+            }
+            else
+            {
+                switch (orderby)
+                {
+                    case "topic": suggestions = suggestions.OrderByDescending(s => s.Title).ToList(); break;
+                    case "description": suggestions = suggestions.OrderByDescending(s => s.Description).ToList(); break;
+                    case "implementdate": suggestions = suggestions.OrderByDescending(s => s.ImplementDate).ToList(); break;
+                    case "creator": suggestions = suggestions.OrderByDescending(s => s.Creator).ToList(); break;
+                    case "createddate": suggestions = suggestions.OrderByDescending(s => s.CreatedDate).ToList(); break;
+                    case "updateddate": suggestions = suggestions.OrderByDescending(s => s.UpdatedDate.ToString()).ToList(); break;
+                }
+            }
+
+            return (suggestions, pages, page);
+        }
+
+        [HttpGet]
+        [Route("home/approve/search")]
+        public IActionResult Search(string term)
+        {
+            if (currentUser == null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+            if (term == null || term == "")
+            {
+                return RedirectToAction("List");
+            }
+
+            using (sssContext dbContext = new sssContext())
+            {
+                var user = dbContext.Systemusers.Where(a => a.Username == currentUser).FirstOrDefault(); // get user with session value
+
+                if (user.Role.Trim() == "Suggestor")
+                {
+                    return View("~/Views/Shared/NotFound.cshtml");
+                }
+
+                string search = term.ToLower();
+
+                var suggestions = dbContext.Suggestions.Where(s =>
+                   s.Title.ToLower().Contains(search) ||
+                   s.Description.ToLower().Contains(search) ||
+                   s.Creator.ToLower().Contains(search) ||
+                   s.CreatedDate.ToString().ToLower().Contains(search) ||
+                   s.UpdatedDate.ToString().ToLower().Contains(search) ||
+                   s.ImplementDate.ToString().ToLower().Contains(search)).Where(s => s.Userid == user.Userid && s.StatusType == null).ToList();
+
+                return View("List", suggestions);
             }
         }
 
