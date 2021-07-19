@@ -1,0 +1,129 @@
+﻿@model IEnumerable<sss.Models.Suggestion>
+
+@{
+    ViewData["Title"] = "Suggestions Approve";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .table td, .table th {
+        padding: .25rem;
+        vertical-align: central;
+    }
+</style>
+
+<h3 style="margin-top:10px ;color: mediumblue;">List User</h3>
+
+<div class="mb-3">
+    <a asp-action="List" class="btn btn-outline-success btn-sm">All</a>
+    <form class="input-group w-50 float-right" asp-action="Search" method="get">
+        <input type="text" class="form-control" placeholder="Search for" name="term" />
+        <div class="input-group-append">
+            <button class="btn btn-outline-secondary" type="submit">Search</button>
+        </div>
+    </form>
+</div>
+
+<br />
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            @{ var current = ViewBag.Current;}
+            <th>
+                <a asp-action="List" asp-route-orderby="topic" asp-route-dsc="@ViewData["topic"]" asp-route-page="@ViewBag.Page">
+                    @if (current == "topic")
+                    {<span>Topic ▼</span>}
+                    else
+                    { <span>Topic</span>}
+                </a>
+            </th>
+            <th>
+                <a asp-action="List" asp-route-orderby="description" asp-route-dsc="@ViewData["description"]" asp-route-page="@ViewBag.Page">
+                    @if (current == "description")
+                    {<span>Description ▼</span>}
+                    else
+                    { <span>Description</span>}
+                </a>
+            </th>
+            <th>
+                <a asp-action="List" asp-route-orderby="creator" asp-route-dsc="@ViewData["creator"]" asp-route-page="@ViewBag.Page">
+                    @if (current == "creator")
+                    {<span>Creator ▼</span>}
+                    else
+                    { <span>Creator</span>}
+                </a>
+            </th>
+            <th>
+                <a asp-action="List" asp-route-orderby="implementdate" asp-route-dsc="@ViewData["implementdate"]" asp-route-page="@ViewBag.Page">
+                    @if (current == "implementdate")
+                    {<span>Implementdate ▼</span>}
+                    else
+                    { <span>Implementdate</span>}
+                </a>
+            </th>
+            <th>
+                <a asp-action="List" asp-route-orderby="createddate" asp-route-dsc="@ViewData["createddate"]" asp-route-page="@ViewBag.Page">
+                    @if (current == "createddate")
+                    {<span>Createddate ▼</span>}
+                    else
+                    { <span>Createddate</span>}
+                </a>
+            </th>
+            <th>
+                <a asp-action="List" asp-route-orderby="updateddate" asp-route-dsc="@ViewData["updateddate"]" asp-route-page="@ViewBag.Page">
+                    @if (current == "updateddate")
+                    {<span>Updateddate ▼</span>}
+                    else
+                    { <span>Updateddate</span>}
+                </a>
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Creator)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ImplementDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CreatedDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UpdatedDate)
+                </td>
+                <td><a asp-action="Actions" asp-route-id="@item.Id" class="btn btn-success btn-sm">Actions</a></td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div style="display: flex; justify-content: center; margin-top: 5px;">
+    <div class="pagination-container">
+        <ul class="pagination">
+            @for (int index = 1; index <= ViewBag.Pages; index++)
+            {
+                if (index == ViewBag.Page)
+                {
+                    <li class="page-item active" onclick="@("window.location.href='" + @Url.Action("List", "Approve") + "?page="+index +"'");"><span class="page-link">@index</span></li>
+                }
+                else
+                {
+                    <li class="page-item" onclick="@("window.location.href='" + @Url.Action("List", "Approve") + "?page="+index +"'");"><span class="page-link">@index</span></li>
+                }
+            }
+        </ul>
+    </div>
+</div>
+

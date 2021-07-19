@@ -17,8 +17,11 @@ namespace sss.Models
         [DisplayName("Implement Date")]
         public DateTime? ImplementDate { get; set; }
         public string StatusType { get; set; }
+        [DisplayName("Comment")]
         public string RemarkFromApprover { get; set; }
+        [DisplayName("Reward Money")]
         public double? RewardMoney { get; set; }
+        [DisplayName("Manager")]
         public string Userid { get; set; }
         public string Creator { get; set; }
         [DisplayName("Created Date")]

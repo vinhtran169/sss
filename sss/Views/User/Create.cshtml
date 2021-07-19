@@ -1,0 +1,111 @@
+﻿@model sss.Models.Systemuser
+
+@{
+    ViewData["Title"] = "CreateUser";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@*autocomplete text input*@
+<script src="~/lib/autocomplete/jquery-3.5.1.slim.min.js"></script>
+<script src="~/lib/autocomplete/popper.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+<script src="~/lib/autocomplete/bootstrap-4-autocomplete.min.js"></script>
+<h3 style="margin-top:10px ;color: mediumblue;">Create User</h3>
+
+<div class="row" style="margin-right:0px">
+    <div class="col-md-8">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group" id="parent">
+                <label asp-for="Userid" class="control-label"></label><span style="color:red; margin-left:2px">*</span>
+                <input name="Userid" asp-for="Userid" class="form-control" type="text" />
+                <span asp-validation-for="Userid" class="text-danger"></span>
+            </div>
+            <div class="form-group" id="parent">
+                <label asp-for="Username" class="control-label"></label><span style="color:red; margin-left:2px">*</span>
+                <input name="Username" asp-for="Username" class="form-control" type="text" />
+                <span asp-validation-for="Username" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Role" class="control-label"></label><span style="color:red; margin-left:2px">*</span>
+                <select asp-for="Role" class="custom-select">
+                    <option value="Admin">Admin</option>
+                    <option value="Manager">Manager</option>
+                    <option value="Router">Router</option>
+                    <option value="Suggestor">Suggestor</option>
+                </select>
+                <span asp-validation-for="Role" class="text-danger"></span>
+            </div>
+            <div class="form-group" id="parent">
+                <label asp-for="Department" class="control-label"></label><span style="color:red; margin-left:2px">*</span>
+                <input name="Department" asp-for="Department" class="form-control" type="text" />
+                <span asp-validation-for="Department" class="text-danger"></span>
+            </div>
+            <div class="form-group" id="parent">
+                <label asp-for="Email" class="control-label"></label><span style="color:red; margin-left:2px">*</span>
+                <input name="Email" asp-for="Email" class="form-control" type="email" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <textarea id="Description" name="Description" style="height:200px;" cols="40" asp-for="Description" class="form-control"></textarea>
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CreatedDate" class="control-label"></label>
+                <input name="CreatedDate" id="CreatedDate" asp-for="CreatedDate" type="text" class="form-control" value="@DateTime.Today.ToString("yyyy-MM-dd")" readonly>
+                <span asp-validation-for="CreatedDate" class="text-danger"></span>
+            </div>
+            <div class="form-group" id="parent">
+                <label asp-for="Password" class="control-label"></label><span style="color:red; margin-left:2px">*</span>
+                <input id="Password" name="Password" asp-for="Password" class="form-control" type="password" aria-describedby="passwordHelpBlock" />
+                <div id="passwordHelpBlock" class="form-text" style="opacity:0.8; font-size:12px">
+                    Your password must be 8-20 characters long.
+                </div>
+                <input type="checkbox" onclick="showPassword()" id="show" style="margin-left:4px;"><label for="Show" style="margin-left:4px; font-size:14px">Show Password</label><br />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="button" value="Clear" class="btn btn-secondary" onClick="clearIt()" />
+                <input type="button" value="Cancel" onclick="@("window.location.href='" + @Url.Action("List", "User") + "'");" class="btn btn-danger" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    // Show password
+    function showPassword() {
+        var x = document.getElementById("Password");
+        if (x.type === "password") {
+            x.type = "text";
+        } else {
+            x.type = "password";
+        }
+    }
+
+    // Clear input text field
+    function clearIt() {
+        document.getElementById('Description').value = "";
+        document.getElementById('Title').value = "";
+    }
+
+    // List autocomplete suguestion
+    var list_autocomlete = {
+        "DEV-BAS": 1,
+        "DEV-EMS": 2,
+    }
+
+    function onSelectItem() {
+        $('#Department').focus();
+    }
+
+    // Autocomplete for input title with bootstrap-4-autocomplete
+    $('#Department').autocomplete({
+        source: list_autocomlete,
+        onSelectItem: onSelectItem,
+        highlightClass: 'text-danger',
+        treshold: 2,
+    });
+</script>
