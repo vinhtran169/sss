@@ -1,0 +1,57 @@
+﻿@model sss.Models.Systemuser
+
+@{
+    ViewData["Title"] = "DetailUser";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h3 style="margin-top:10px ;color: mediumblue;">Detail User</h3>
+<div>
+    @ViewBag.Reset
+</div>
+<div>
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Username)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Username)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Role)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Role)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Department)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Department)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.CreatedDate)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CreatedDate)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-userid="@Model.Userid.Trim()" class="btn btn-success">Edit</a>
+    <a asp-action="List" class="btn btn-info">Back to list</a>
+    <a asp-action="ResetPassword" asp-route-userid="@Model.Userid.Trim()" class="btn btn-danger">Reset Password</a>
+    @ViewBag.Reset
+</div>

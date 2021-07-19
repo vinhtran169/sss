@@ -1,0 +1,92 @@
+﻿@model sss.Models.Systemuser
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@*autocomplete text input*@
+<script src="~/lib/autocomplete/jquery-3.5.1.slim.min.js"></script>
+<script src="~/lib/autocomplete/popper.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+<script src="~/lib/autocomplete/bootstrap-4-autocomplete.min.js"></script>
+
+<h3 style="margin-top:10px ;color: mediumblue;">Edit User</h3>
+
+<div class="row" style="margin-right:0px">
+    <div class="col-md-8">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Userid" class="control-label"></label><span style="color:red; margin-left:2px">*</span>
+                <input asp-for="Userid" class="form-control" readonly />
+                <span asp-validation-for="Userid" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Username" class="control-label"></label><span style="color:red; margin-left:2px">*</span>
+                <input asp-for="Username" class="form-control" />
+                <span asp-validation-for="Username" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Role" class="control-label"></label><span style="color:red; margin-left:2px">*</span>
+                <select asp-for="Role" class="custom-select">
+                    <option selected value="@Model.Role.Trim()">@Model.Role.Trim() (current)</option>
+                    <option value="Admin">Admin</option>
+                    <option value="Manager">Manager</option>
+                    <option value="Router">Router</option>
+                    <option value="Suggestor">Suggestor</option>
+                </select>
+                <span asp-validation-for="Role" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Department" class="control-label"></label><span style="color:red; margin-left:2px">*</span>
+                <input asp-for="Department" class="form-control" />
+                <span asp-validation-for="Department" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Email" class="control-label"></label><span style="color:red; margin-left:2px">*</span>
+                <input asp-for="Email" class="form-control" type="email"/>
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <textarea id="Description" name="Description" style="height:200px;" cols="40" asp-for="Description" class="form-control"></textarea>
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CreatedDate" class="control-label"></label>
+                <input asp-for="CreatedDate" class="form-control" readonly />
+                <span asp-validation-for="CreatedDate" class="text-danger"></span>
+            </div>
+            <div class="form-group" hidden>
+                <label asp-for="Password" class="control-label"></label><span style="color:red; margin-left:2px">*</span>
+                <input asp-for="Password" class="form-control" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Edit" class="btn btn-primary" />
+                <input type="button" value="Cancel" onclick="@("window.location.href='" + @Url.Action("List", "User") + "'");" class="btn btn-danger" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    // List autocomplete suguestion
+    var list_autocomlete = {
+        "DEV-BAS": 1,
+        "DEV-EMS": 2,
+    }
+
+    function onSelectItem() {
+        $('#Department').focus();
+    }
+
+    // Autocomplete for input title with bootstrap-4-autocomplete
+    $('#Department').autocomplete({
+        source: list_autocomlete,
+        onSelectItem: onSelectItem,
+        highlightClass: 'text-danger',
+        treshold: 2,
+    });
+</script>
