@@ -1,0 +1,29 @@
+﻿
+@{
+	ViewData["Title"] = "login";
+	<link href="~/css/site.css" rel="stylesheet" />
+}
+
+
+<div class="row">
+	<div class="col-md-4">
+	</div>
+	<div class="col-md-4 form-login">
+		<h2 class="login">Login</h2>
+		<form method="post" asp-controller="Systemuser" asp-action="Login">
+			<div class="form-group">
+				<input type="text" class="form-control" placeholder="Enter username" name="username">
+			</div>
+			<div class="form-group">
+				<input type="password" class="form-control" placeholder="Enter password" name="password">
+			</div>
+			<button type="submit" class="btn btn-primary">Submit</button>
+		</form>
+		<h2 style="color:red">@ViewBag.error</h2>
+		<h2 style="color:red">@ViewBag.name</h2>
+
+	</div>
+	<div class="col-md-4"></div>
+
+</div>
+
