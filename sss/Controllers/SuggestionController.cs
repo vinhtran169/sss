@@ -18,18 +18,15 @@ namespace sss.Controllers
 
         public SuggestionController()
         {
-            currentUser = "admin"; // Get username from session value
-        }
-
-        public IActionResult Index()
-        {
-            return View();
+            //currentUser = "admin"; // Get username from session value
         }
 
         [HttpGet]
         [Route("home/suggest/create")]
         public IActionResult Create()
         {
+            currentUser = HttpContext.Session.GetString("username"); // Get session value
+
             // Check is session exist
             if (currentUser != null)
             {
@@ -43,6 +40,8 @@ namespace sss.Controllers
         [Route("home/suggest/create")]
         public IActionResult Create(Suggestion suggestion)
         {
+            currentUser = HttpContext.Session.GetString("username"); // Get session value
+
             // Validate suggestion
             if (!ValidateSuguestion(suggestion))
             {
@@ -80,6 +79,8 @@ namespace sss.Controllers
         // This function validate suguestion and return a bool value
         private bool ValidateSuguestion(Suggestion suggestion)
         {
+            currentUser = HttpContext.Session.GetString("username"); // Get session value
+
             bool check_valid = true;
 
             string suggest_title = suggestion.Title;
@@ -144,6 +145,8 @@ namespace sss.Controllers
         [Route("home/suggest/list")]
         public IActionResult List(string sortOrder, string searchString, string currentFilter, int? page)
         {
+            currentUser = HttpContext.Session.GetString("username"); // Get session value
+
             HttpContext.Session.SetString("username", "admin"); //temp session
             string username = HttpContext.Session.GetString("username");
 
