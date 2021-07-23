@@ -16,11 +16,6 @@ namespace sss.Controllers
     {
         static string currentUser = string.Empty;
 
-        public UserController()
-        {
-            //currentUser = "admin"; // Get username from session value
-        }
-
         // Check login role function
         public static bool CheckLoginRole(sssContext context, string currentUser, string role)
         {
@@ -51,7 +46,7 @@ namespace sss.Controllers
                 }
             }
 
-            return RedirectToAction("Login", "Account");
+            return RedirectToAction("Login", "Systemuser");
         }
 
         [HttpPost]
@@ -62,7 +57,7 @@ namespace sss.Controllers
 
             if (currentUser == null)
             {
-                return RedirectToAction("Login", "Account");
+                return RedirectToAction("Login", "Systemuser");
             }
 
             // Validate user
@@ -100,7 +95,7 @@ namespace sss.Controllers
 
             if (currentUser == null)
             {
-                return RedirectToAction("Login", "Account");
+                return RedirectToAction("Login", "Systemuser");
             }
 
             using (sssContext dbContext = new sssContext())
@@ -169,7 +164,7 @@ namespace sss.Controllers
 
             if (currentUser == null)
             {
-                return RedirectToAction("Login", "Account");
+                return RedirectToAction("Login", "Systemuser");
             }
 
             if (userid == null)
@@ -207,7 +202,7 @@ namespace sss.Controllers
 
             if (currentUser == null)
             {
-                return RedirectToAction("Login", "Account");
+                return RedirectToAction("Login", "Systemuser");
             }
 
             if (userid == null)
@@ -242,7 +237,7 @@ namespace sss.Controllers
 
             if (currentUser == null)
             {
-                return RedirectToAction("Login", "Account");
+                return RedirectToAction("Login", "Systemuser");
             }
 
             if (userid == null)
@@ -277,7 +272,7 @@ namespace sss.Controllers
 
             if (currentUser == null)
             {
-                return RedirectToAction("Login", "Account");
+                return RedirectToAction("Login", "Systemuser");
             }
 
             if (systemuser == null)
@@ -313,7 +308,7 @@ namespace sss.Controllers
 
             if (currentUser == null)
             {
-                return RedirectToAction("Login", "Account");
+                return RedirectToAction("Login", "Systemuser");
             }
 
             if (term == null || term == "")
@@ -351,7 +346,7 @@ namespace sss.Controllers
 
             if (currentUser == null)
             {
-                return RedirectToAction("Login", "Account");
+                return RedirectToAction("Login", "Systemuser");
             }
 
             if (userid == null)

@@ -16,11 +16,6 @@ namespace sss.Controllers
     {
         string currentUser = string.Empty; 
 
-        public SuggestionController()
-        {
-            //currentUser = "admin"; // Get username from session value
-        }
-
         [HttpGet]
         [Route("home/suggest/create")]
         public IActionResult Create()
@@ -33,7 +28,7 @@ namespace sss.Controllers
                 return View();
             }
 
-            return RedirectToAction("Login", "Account");
+            return RedirectToAction("Login", "Systemuser");
         }
 
         [HttpPost]
@@ -147,12 +142,9 @@ namespace sss.Controllers
         {
             currentUser = HttpContext.Session.GetString("username"); // Get session value
 
-            HttpContext.Session.SetString("username", "admin"); //temp session
-            string username = HttpContext.Session.GetString("username");
-
-            if (username == null)
+            if (currentUser == null)
             {
-                return RedirectToAction("Login", "Account");
+                return RedirectToAction("Login", "Systemuser");
             }
             
             using (sssContext dbContext = new sssContext())

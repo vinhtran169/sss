@@ -16,11 +16,6 @@ namespace sss.Controllers
     {
         string currentUser = string.Empty;
 
-        public ApproveController()
-        {
-            //currentUser = "manager"; // Get username from session value
-        }
-
         [HttpGet]
         [Route("home/approve/list")]
         public IActionResult List(int page = 1, string orderby = "topic", bool dsc = true)
@@ -29,7 +24,7 @@ namespace sss.Controllers
 
             if (currentUser == null)
             {
-                return RedirectToAction("Login", "Account");
+                return RedirectToAction("Login", "Systemuser");
             }
 
             using (sssContext dbContext = new sssContext())
@@ -100,7 +95,7 @@ namespace sss.Controllers
 
             if (currentUser == null)
             {
-                return RedirectToAction("Login", "Account");
+                return RedirectToAction("Login", "Systemuser");
             }
 
             if (term == null || term == "")
@@ -136,6 +131,11 @@ namespace sss.Controllers
         public IActionResult Actions(int id)
         {
             currentUser = HttpContext.Session.GetString("username"); // Get session value
+
+            if (currentUser == null)
+            {
+                return RedirectToAction("Login", "Systemuser");
+            }
 
             using (sssContext dbContext = new sssContext())
             {
