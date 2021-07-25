@@ -52,7 +52,7 @@ namespace sss
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=Systemuser}/{action=Login}/{id?}");
             });
         }
     }

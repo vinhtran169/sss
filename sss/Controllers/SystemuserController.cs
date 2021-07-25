@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using sss.Models;
 using System;
 using System.Collections.Generic;
@@ -10,17 +11,12 @@ namespace sss.Controllers
 {
 	public class SystemuserController : Controller
 	{
-		public IActionResult Index()
-		{
-			return View();
-		}
-
-
-
+		
 		public IActionResult Login()
 		{
 			return View();
 		}
+
 
 
         [HttpPost]
@@ -37,7 +33,8 @@ namespace sss.Controllers
                 {
                     HttpContext.Session.SetString("username", username);
                     //return Redirect("~/");
-                    return View("Login");
+                    TempData["username"] = username;
+                    return RedirectToAction("Index", "Home");
                 }
                 else
                 {
