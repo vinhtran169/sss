@@ -121,3 +121,40 @@ body {
 .current {
     background-color:lightgray;
 }
+
+
+/* Login Form Css*/
+
+.login {
+    text-align:center;
+    margin-bottom:20px;
+    color:white;
+    margin-top : 30px;
+}
+.form_login{
+    margin-top: 100px;
+    background-color: cadetblue;
+    height:300px;
+
+}
+
+.input_user, .input_password {
+    margin: 0 auto;
+    width:300px;
+}
+
+.btn_submit{
+   margin-left:70px;
+   width:300px;
+}
+.register_account {
+    margin-left: 70px;
+    font-size: 15px;
+    color: white;
+    text-decoration: none;
+}
+
+.register_account:hover{
+    text-decoration:none;
+    color:red;
+}
