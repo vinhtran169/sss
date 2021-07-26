@@ -16,18 +16,15 @@ namespace sss.Controllers
     {
         string currentUser = string.Empty;
 
-        public ApproveController()
-        {
-            currentUser = "manager"; // Get username from session value
-        }
-
         [HttpGet]
         [Route("home/approve/list")]
         public IActionResult List(int page = 1, string orderby = "topic", bool dsc = true)
         {
+            currentUser = HttpContext.Session.GetString("username"); // Get session value
+
             if (currentUser == null)
             {
-                return RedirectToAction("Login", "Account");
+                return RedirectToAction("Login", "Systemuser");
             }
 
             using (sssContext dbContext = new sssContext())
@@ -94,9 +91,11 @@ namespace sss.Controllers
         [Route("home/approve/search")]
         public IActionResult Search(string term)
         {
+            currentUser = HttpContext.Session.GetString("username"); // Get session value
+
             if (currentUser == null)
             {
-                return RedirectToAction("Login", "Account");
+                return RedirectToAction("Login", "Systemuser");
             }
 
             if (term == null || term == "")
@@ -131,6 +130,13 @@ namespace sss.Controllers
         [Route("home/approve/actions")]
         public IActionResult Actions(int id)
         {
+            currentUser = HttpContext.Session.GetString("username"); // Get session value
+
+            if (currentUser == null)
+            {
+                return RedirectToAction("Login", "Systemuser");
+            }
+
             using (sssContext dbContext = new sssContext())
             {
                 var suggestion = dbContext.Suggestions.Where(a => a.Id == id).FirstOrDefault(); // get suggestion value
@@ -168,6 +174,8 @@ namespace sss.Controllers
         [Route("home/approve/actions")]
         public IActionResult Actions(Suggestion suggestion)
         {
+            currentUser = HttpContext.Session.GetString("username"); // Get session value
+
             using (sssContext dbContext = new sssContext())
             {
                 var user = dbContext.Systemusers.Where(a => a.Username == currentUser).FirstOrDefault(); // get user with session value
@@ -203,6 +211,8 @@ namespace sss.Controllers
         // Validate suggestion with role
         private bool ValidateSuguestion(Suggestion suggestion, string role)
         {
+            currentUser = HttpContext.Session.GetString("username"); // Get session value
+
             bool check_valid = true;
 
             using (sssContext dbContext = new sssContext())

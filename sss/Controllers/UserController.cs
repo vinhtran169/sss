@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using sss.Models;
 using System.Security.Cryptography;
+using Microsoft.AspNetCore.Http;
 
 namespace sss.Controllers
 {
@@ -14,11 +15,6 @@ namespace sss.Controllers
     public class UserController : Controller
     {
         static string currentUser = string.Empty;
-
-        public UserController()
-        {
-            currentUser = "admin"; // Get username from session value
-        }
 
         // Check login role function
         public static bool CheckLoginRole(sssContext context, string currentUser, string role)
@@ -36,6 +32,7 @@ namespace sss.Controllers
         [Route("admin/account/create")]
         public IActionResult Create()
         {
+            currentUser = HttpContext.Session.GetString("username"); // Get session value
             // Check is session exist
             if (currentUser != null)
             {
@@ -49,16 +46,18 @@ namespace sss.Controllers
                 }
             }
 
-            return RedirectToAction("Login", "Account");
+            return RedirectToAction("Login", "Systemuser");
         }
 
         [HttpPost]
         [Route("admin/account/create")]
         public IActionResult Create(Systemuser user)
         {
-            if(currentUser == null)
+            currentUser = HttpContext.Session.GetString("username"); // Get session value
+
+            if (currentUser == null)
             {
-                return RedirectToAction("Login", "Account");
+                return RedirectToAction("Login", "Systemuser");
             }
 
             // Validate user
@@ -92,9 +91,11 @@ namespace sss.Controllers
         [Route("admin/account/list")]
         public IActionResult List(int page = 1, string orderby = "userid", bool dsc = false)
         {
+            currentUser = HttpContext.Session.GetString("username"); // Get session value
+
             if (currentUser == null)
             {
-                return RedirectToAction("Login", "Account");
+                return RedirectToAction("Login", "Systemuser");
             }
 
             using (sssContext dbContext = new sssContext())
@@ -159,9 +160,11 @@ namespace sss.Controllers
         [HttpPost]
         public IActionResult Delete(string userid)
         {
+            currentUser = HttpContext.Session.GetString("username"); // Get session value
+
             if (currentUser == null)
             {
-                return RedirectToAction("Login", "Account");
+                return RedirectToAction("Login", "Systemuser");
             }
 
             if (userid == null)
@@ -195,9 +198,11 @@ namespace sss.Controllers
         [Route("admin/account/detail")]
         public IActionResult Detail(string userid)
         {
+            currentUser = HttpContext.Session.GetString("username"); // Get session value
+
             if (currentUser == null)
             {
-                return RedirectToAction("Login", "Account");
+                return RedirectToAction("Login", "Systemuser");
             }
 
             if (userid == null)
@@ -228,9 +233,11 @@ namespace sss.Controllers
         [Route("admin/account/edit")]
         public IActionResult Edit(string userid)
         {
+            currentUser = HttpContext.Session.GetString("username"); // Get session value
+
             if (currentUser == null)
             {
-                return RedirectToAction("Login", "Account");
+                return RedirectToAction("Login", "Systemuser");
             }
 
             if (userid == null)
@@ -261,9 +268,11 @@ namespace sss.Controllers
         [Route("admin/account/edit")]
         public IActionResult Edit(Systemuser systemuser)
         {
+            currentUser = HttpContext.Session.GetString("username"); // Get session value
+
             if (currentUser == null)
             {
-                return RedirectToAction("Login", "Account");
+                return RedirectToAction("Login", "Systemuser");
             }
 
             if (systemuser == null)
@@ -295,9 +304,11 @@ namespace sss.Controllers
         [Route("admin/account/search")]
         public IActionResult Search(string term)
         {
+            currentUser = HttpContext.Session.GetString("username"); // Get session value
+
             if (currentUser == null)
             {
-                return RedirectToAction("Login", "Account");
+                return RedirectToAction("Login", "Systemuser");
             }
 
             if (term == null || term == "")
@@ -331,9 +342,11 @@ namespace sss.Controllers
         [Route("admin/account/resetpassword")]
         public IActionResult ResetPassword(string userid)
         {
+            currentUser = HttpContext.Session.GetString("username"); // Get session value
+
             if (currentUser == null)
             {
-                return RedirectToAction("Login", "Account");
+                return RedirectToAction("Login", "Systemuser");
             }
 
             if (userid == null)
@@ -364,6 +377,8 @@ namespace sss.Controllers
         }
         private bool ValidateUser(Systemuser systemuser, string action)
         {
+            currentUser = HttpContext.Session.GetString("username"); // Get session value
+
             bool check_valid = true;
             bool check_action = true;
 
