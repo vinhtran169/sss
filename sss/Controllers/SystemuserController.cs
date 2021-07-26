@@ -12,13 +12,11 @@ namespace sss.Controllers
 {
 	public class SystemuserController : Controller
 	{
-		
-		public IActionResult Login()
-		{
-			return View();
-		}
 
-
+        public IActionResult Login()
+        {
+            return PartialView("_LoginForm");
+        }
 
         [HttpPost]
         public IActionResult Login(IFormCollection form)
@@ -35,13 +33,12 @@ namespace sss.Controllers
                 if (existUser)
                 {
                     HttpContext.Session.SetString("username", username);
-                    ViewBag.success = "Success Login";
-                    return View("Login");
+                    return RedirectToAction("Index", "Home");
                 }
                 else
                 {
                     ViewBag.error = "False Login";
-                    return View("Login");
+                    return PartialView("_LoginForm");
                 }
             }
         }
