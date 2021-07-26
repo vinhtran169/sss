@@ -1,26 +1,25 @@
 ﻿@{
-		ViewData["Title"] = "Login Page";
+	ViewData["Title"] = "Login Page";
 	<link href="~/css/site.css" rel="stylesheet" />
 }
 
 <div class="row">
 	<div class="col-md-4 col-sm-4">
 	</div>
-	<div class="col-md-4 col-sm-4 form_login">
-		<h2 class="login">Login</h2>
-		<form method="post" asp-controller="Systemuser" asp-action="Login">
-			<div class="form-group ">
-				<input type="text" class="form-control input_user" placeholder="Enter username" name="username">
-			</div>
-			<div class="form-group">
-				<input type="password" class="form-control input_password" placeholder="Enter password" name="password">
-			</div>
-			<button type="submit" class="btn btn-primary btn_submit">Submit</button>
-		</form>
-		<a class="register_account" href=""> Register Account</a>
-		<h2 style="color:red">@ViewBag.error</h2>
-
-	</div>
+    <div class="col-md-4 col-sm-4 form_login">
+        <h2 class="login">Login</h2>
+        <form method="post" asp-controller="Systemuser" asp-action="Login">
+            <div class="form-group ">
+                <input type="text" class="form-control input_user" placeholder="Enter username" name="username">
+            </div>
+            <div class="form-group">
+                <input type="password" class="form-control input_password" placeholder="Enter password" name="password">
+            </div>
+            <h5 style="color:red; text-align:center">@ViewBag.error</h5>
+            <h5 style="color:green; text-align:center">@ViewBag.success</h5>
+            <button type="submit" class="btn btn-primary btn_submit form-group" style="margin-left: 0px">Submit</button>
+        </form>
+    </div>
 	<div class="col-md-4 col-sm-4"></div>
 
 </div>

@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Security.Cryptography;
 
 namespace sss.Controllers
 {
@@ -24,6 +25,8 @@ namespace sss.Controllers
         {
             string username = form["username"];
             string password = form["password"];
+            password = BitConverter.ToString(MD5.Create().ComputeHash(System.Text.Encoding.ASCII.GetBytes(password))).Replace("-", "");
+
 
             using (sssContext dbContext = new sssContext())
             {
@@ -32,16 +35,21 @@ namespace sss.Controllers
                 if (existUser)
                 {
                     HttpContext.Session.SetString("username", username);
-                    //return Redirect("~/");
-                    TempData["username"] = username;
-                    return RedirectToAction("Index", "Home");
+                    ViewBag.success = "Success Login";
+                    return View("Login");
                 }
                 else
                 {
-                    ViewBag.error = existUser;
+                    ViewBag.error = "False Login";
                     return View("Login");
                 }
             }
+        }
+
+        public IActionResult Logout()
+        {
+            HttpContext.Session.Clear();
+            return RedirectToAction("Login", "Systemuser");
         }
     }
 }
