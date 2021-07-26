@@ -14,7 +14,7 @@ namespace sss.Controllers
 		
 		public IActionResult Login()
 		{
-			return View();
+			return PartialView("_LoginForm");
 		}
 
 
