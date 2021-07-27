@@ -43,6 +43,7 @@ namespace sss.Controllers
                 ViewData["Page"] = model.page;
                 ViewData[orderby.Trim()] = !dsc;
                 ViewBag.Current = orderby.Trim();
+                ViewBag.User = user.Role;
 
                 if (page > model.pages && model.pages != 0)
                 {
