@@ -17,33 +17,27 @@ namespace sss.Controllers
     {
         string currentUser = string.Empty; 
 
-        public SuggestionController()
-        {
-            currentUser = "admin"; // Get username from session value
-        }
-
-        public IActionResult Index()
-        {
-            return View();
-        }
-
         [HttpGet]
         [Route("home/suggest/create")]
         public IActionResult Create()
         {
+            currentUser = HttpContext.Session.GetString("username"); // Get session value
+
             // Check is session exist
             if (currentUser != null)
             {
                 return View();
             }
 
-            return RedirectToAction("Login", "Account");
+            return RedirectToAction("Login", "Systemuser");
         }
 
         [HttpPost]
         [Route("home/suggest/create")]
         public IActionResult Create(Suggestion suggestion)
         {
+            currentUser = HttpContext.Session.GetString("username"); // Get session value
+
             // Validate suggestion
             if (!ValidateSuguestion(suggestion))
             {
@@ -81,6 +75,8 @@ namespace sss.Controllers
         // This function validate suguestion and return a bool value
         private bool ValidateSuguestion(Suggestion suggestion)
         {
+            currentUser = HttpContext.Session.GetString("username"); // Get session value
+
             bool check_valid = true;
 
             string suggest_title = suggestion.Title;
@@ -145,12 +141,11 @@ namespace sss.Controllers
         [Route("home/suggest/list")]
         public IActionResult List(string sortOrder, string searchString, string currentFilter, int? page)
         {
-            HttpContext.Session.SetString("username", "admin"); //temp session
-            string username = HttpContext.Session.GetString("username");
+            currentUser = HttpContext.Session.GetString("username"); // Get session value
 
-            if (username == null)
+            if (currentUser == null)
             {
-                return RedirectToAction("Login", "Account");
+                return RedirectToAction("Login", "Systemuser");
             }
             
             using (sssContext dbContext = new sssContext())

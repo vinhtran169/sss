@@ -54,34 +54,28 @@
 			</div>
 		</div>
 
-		<div class="container-fluid">
-			<div class="row">
-				<div class="col-lg-3">
-					<ul class="list-group menu">
-						<li class="list-group-item" id="group1">Suggestion<span class="fas fa-angle-double-right" id="downcircle" style="margin-left:170px"></span></li>
-						<div id="suggestion">
-							<ul class="list-group">
-								<li class="list-group-item"><a class="a-menu" href="#">Add new suggest</a></li>
-								<li class="list-group-item"><a class="a-menu" href="#">Suggestion List </a></li>
-								<li class="list-group-item"><a  class="a-menu" href="#">My approving list</a></li>
-								<li class="list-group-item"><a class="a-menu" href="#">My suggestion list</a></li>
-							</ul>
-						</div>
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-lg-3">
+				<ul class="list-group menu">
+					<li class="list-group-item" id="group1">Suggestion<span class="fas fa-angle-double-right" id="downcircle" style="margin-left:170px"></span></li>
+					<div id="suggestion">
+						<ul class="list-group">
+							<li class="list-group-item"><a class="a-menu" asp-controller="Suggestion" asp-action="Create">Add new suggest</a></li>
+							<li class="list-group-item"><a class="a-menu" href="#">Suggestion List </a></li>
+							<li class="list-group-item"><a  class="a-menu" asp-controller="Approve" asp-action="List">My approving list</a></li>
+							<li class="list-group-item"><a class="a-menu" href="#">My suggestion list</a></li>
+						</ul>
+					</div>
 
-						<li class="list-group-item" id="group2">Adminstrator section <span class="fas fa-angle-double-right" id="downcircle" style="margin-left:93px"></span></li>
-						<div id="administrator">
-							<ul class="list-group">
-								<li class="list-group-item"><a class="a-menu" href="#">Create new user</a></li>
-								<li class="list-group-item"><a class="a-menu" href="#">User list</a></li>
-							</ul>
-						</div>
-					</ul>
-				</div>
-				<div class="col-lg-9">
-					<main role="main" class="pb-3">
-						@RenderBody()
-					</main>
-				</div>
+					<li class="list-group-item" id="group2">Adminstrator section <span class="fas fa-angle-double-right" id="downcircle" style="margin-left:93px"></span></li>
+					<div id="administrator">
+						<ul class="list-group">
+							<li class="list-group-item"><a class="a-menu" asp-controller="User" asp-action="Create">Create new user</a></li>
+							<li class="list-group-item"><a class="a-menu" asp-controller="User" asp-action="List">User list</a></li>
+						</ul>
+					</div>
+				</ul>
 			</div>
 		</div>
 
