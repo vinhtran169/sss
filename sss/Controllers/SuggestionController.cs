@@ -203,7 +203,7 @@ namespace sss.Controllers
                 return View(listSuggest.ToPagedList(pageNumber, pageSize));
             }
         }
-        //[Route("home/suggest/views/id")]
+       // [Route("home/suggest/views/id")]
         public IActionResult Details(int? id)
 		{
             using (sssContext dbContext = new sssContext())
