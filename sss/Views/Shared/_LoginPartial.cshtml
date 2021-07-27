@@ -1,0 +1,25 @@
+﻿@using Microsoft.AspNetCore.Http
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+
+@if (@HttpContextAccessor.HttpContext.Session.GetString("username") == "" || @HttpContextAccessor.HttpContext.Session.GetString("username") == null)
+{
+	<ul class="navbar-nav justify-content-end navbar-right-account">
+		<li class="nav-item">
+			<a class="nav-link text-dark" asp-controller="Systemuser" asp-action="Login"><span class="fas fa-sign-in-alt" style="margin-right:10px"></span>Login</a>
+		</li>
+		<li class="nav-item">
+			<a class="nav-link text-dark" asp-controller="Systemuser" asp-action="Register"><span class="far fa-registered" style="margin-right:10px"></span>Register</a>
+		</li>
+	</ul>
+}
+else
+{
+	<ul class="navbar-nav justify-content-end navbar-right-account">
+		<li class="nav-item ">
+			<a class="nav-link text-dark"><span class="fas fa-user" style="margin-right:5px;"></span>Welcome @HttpContextAccessor.HttpContext.Session.GetString("username")</a>
+		</li>
+		<li class="nav-item">
+			<a class="nav-link text-dark" asp-controller="Systemuser" asp-action="Logout">Logout</a>
+		</li>
+	</ul>
+}
