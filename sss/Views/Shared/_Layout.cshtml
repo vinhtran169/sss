@@ -1,129 +1,94 @@
-﻿@*<!DOCTYPE html>
-	<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>@ViewData["Title"] - sss</title>
-		<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-		<link rel="stylesheet" href="~/css/site.css" />
-		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
-			  integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
-		<script src="~/lib/jquery/dist/jquery.min.js"></script>
-		<script>
-			$(document).ready(function () {
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - sss</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+          integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
 
-				$(".a-menu").click(function () {
-					$(".a-menu").closest("li").removeClass("current");
-					$(this).closest("li").addClass("current");
+            $(".a-menu").click(function () {
+                $(".a-menu").closest("li").removeClass("current");
+                $(this).closest("li").addClass("current");
 
-				});
+            });
 
-			});
-		</script>
+        });
+    </script>
 
-	</head>
-	<body>
-		<header>
-			<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow">
-				<div class="container-fluid">
-					<div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-						<ul class="navbar-nav flex-grow-1">
-							<li class="navbar-brand">Staff Suggestion System</li>
-							<li class="nav-item">
-								<a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index"><span class="fas fa-home"></span> Home</a>
-							</li>
-							<li class="nav-item">
-								<a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-							</li>
-						</ul>
-					</div>
-					<ul class="navbar-nav justify-content-end navbar-right-account">
-						<li class="nav-item">
-							<a class="nav-link text-dark" asp-controller="sks" asp-action="Login"><span class="fas fa-sign-in-alt" style="margin-right:10px"></span>Login</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link text-dark" asp-controller="Account" asp-action="Register"><span class="far fa-registered" style="margin-right:10px"></span>Register</a>
-						</li>
-					</ul>
-				</div>
-			</nav>
-		</header>
-		<div class="container-fluid logo">
-			<img class="rounded" src="~/img/supreme.png" alt="logo" style="margin-left:-20px">
-		</div>
-		<div class="progress">
-			<div class="progress-bar progress-bar-info progress-bar-color" role="progressbar" aria-valuenow="50" s
-				 aria-valuemin="0" aria-valuemax="100" style="width:100%">
-			</div>
-		</div>
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow">
+            <div class="container-fluid">
+                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="navbar-brand">Staff Suggestion System</li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index"><span class="fas fa-home"></span> Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                        </li>
+                    </ul>
+                </div>
+                @{ Html.RenderPartial("_loginPartial"); }
+            </div>
+        </nav>
+    </header>
+    <div class="container-fluid logo">
+        <img class="rounded" src="~/img/supreme.png" alt="logo" style="margin-left:-20px">
+    </div>
+    <div class="progress">
+        <div class="progress-bar progress-bar-info progress-bar-color" role="progressbar" aria-valuenow="50" s
+             aria-valuemin="0" aria-valuemax="100" style="width:100%">
+        </div>
+    </div>
 
-	<div class="container-fluid">
-		<div class="row">
-			<div class="col-lg-3">
-				<ul class="list-group menu">
-					<li class="list-group-item" id="group1">Suggestion<span class="fas fa-angle-double-right" id="downcircle" style="margin-left:170px"></span></li>
-					<div id="suggestion">
-						<ul class="list-group">
-							<li class="list-group-item"><a class="a-menu" asp-controller="Suggestion" asp-action="Create">Add new suggest</a></li>
-							<li class="list-group-item"><a class="a-menu" asp-controller="Suggestion" asp-action="List">Suggestion List</a></li>
-							<li class="list-group-item"><a  class="a-menu" asp-controller="Approve" asp-action="List">My approving list</a></li>
-							<li class="list-group-item"><a class="a-menu" href="#">My suggestion list</a></li>
-						</ul>
-					</div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-3">
+                <ul class="list-group menu">
+                    <li class="list-group-item" id="group1">Suggestion<span class="fas fa-angle-double-right" id="downcircle" style="margin-left:170px"></span></li>
+                    <div id="suggestion">
+                        <ul class="list-group">
+                            <li class="list-group-item"><a class="a-menu" asp-controller="Suggestion" asp-action="Create">Add new suggest</a></li>
+                            <li class="list-group-item"><a class="a-menu" asp-controller="Suggestion" asp-action="List">Suggestion List </a></li>
+                            <li class="list-group-item"><a class="a-menu" asp-controller="Approve" asp-action="List">My approving list</a></li>
+                            <li class="list-group-item"><a class="a-menu" href="#">My suggestion list</a></li>
+                        </ul>
+                    </div>
 
-					<li class="list-group-item" id="group2">Adminstrator section <span class="fas fa-angle-double-right" id="downcircle" style="margin-left:93px"></span></li>
-					<div id="administrator">
-						<ul class="list-group">
-							<li class="list-group-item"><a class="a-menu" asp-controller="User" asp-action="Create">Create new user</a></li>
-							<li class="list-group-item"><a class="a-menu" asp-controller="User" asp-action="List">User list</a></li>
-						</ul>
-					</div>
-				</ul>
-			</div>
-		</div>
+                    <li class="list-group-item" id="group2">Adminstrator section <span class="fas fa-angle-double-right" id="downcircle" style="margin-left:93px"></span></li>
+                    <div id="administrator">
+                        <ul class="list-group">
+                            <li class="list-group-item"><a class="a-menu" asp-controller="User" asp-action="Create">Create new user</a></li>
+                            <li class="list-group-item"><a class="a-menu" asp-controller="User" asp-action="List">User list</a></li>
+                        </ul>
+                    </div>
+                </ul>
+            </div>
+            <div class="col-lg-9">
+                <main role="main" class="pb-3">
+                    @RenderBody()
+                </main>
+            </div>
+        </div>
+    </div>
 
-		<footer class="border-top footer text-muted footer">
-			<div class="container-fluid">
-				&copy; 2021 - Staff Suggestion System
-			</div>
-		</footer>
+    <footer class="border-top footer text-muted footer">
+        <div class="container-fluid">
+            &copy; 2021 - Staff Suggestion System
+        </div>
+    </footer>
 
-		<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-		<script src="~/js/site.js" asp-append-version="true"></script>
-		@RenderSection("Scripts", required: false)
-	</body>
-	</html>*@
-
-
-<!DOCTYPE html>
-	<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>@ViewData["Title"] - sss</title>
-		<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-		<link rel="stylesheet" href="~/css/site.css" />
-		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
-			  integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
-		<script src="~/lib/jquery/dist/jquery.min.js"></script>
-		
-	</head>
-	<body>
-		
-	<main role="main" class="pb-3">
-					@RenderBody()
-	</main>
-
-		<footer class="border-top footer text-muted footer">
-			<div class="container-fluid">
-				&copy; 2021 - Staff Suggestion System
-			</div>
-		</footer>
-
-		<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-		<script src="~/js/site.js" asp-append-version="true"></script>
-		@RenderSection("Scripts", required: false)
-	</body>
-	</html>
-
-
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>
