@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using X.PagedList;
 using sss.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace sss.Controllers
 {
@@ -207,5 +208,40 @@ namespace sss.Controllers
                 return View(listSuggest.ToPagedList(pageNumber, pageSize));
             }
         }
+        //[Route("home/suggest/views/id")]
+        public IActionResult Details(int? id)
+		{
+            using (sssContext dbContext = new sssContext())
+			{
+                Suggestion details = dbContext.Suggestions.Find(id);
+                return View(details);
+			}
+                
+		}
+       // [Route("home/suggest/edit/id")]
+        public IActionResult Edit(int? id)
+		{
+
+            using (sssContext dbContext = new sssContext())
+            {
+                Suggestion edit = dbContext.Suggestions.Find(id);
+                return View(edit);
+            }
+        }
+
+        [HttpPost]
+        public IActionResult Edit(Suggestion suggestion)
+		{
+            sssContext dbContext = new sssContext();
+
+            if (ModelState.IsValid)
+			{
+                    dbContext.Entry(suggestion).State = EntityState.Modified;
+                    dbContext.SaveChanges();
+                    return RedirectToAction("List");
+
+            }
+            return View(suggestion);
+		}
     }
 }
