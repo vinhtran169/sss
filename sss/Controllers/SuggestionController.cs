@@ -137,7 +137,7 @@ namespace sss.Controllers
         }
         
         [Route("home/suggest/list")]
-        public IActionResult List(string sortOrder, string searchString, string currentFilter, int page)
+        public IActionResult List(string sortOrder, string searchString, string currentFilter, int page = 1)
         {
             currentUser = HttpContext.Session.GetString("username"); // Get session value
 
@@ -193,7 +193,6 @@ namespace sss.Controllers
             string sortOrder)
         {
             int pages = (int) Math.Ceiling((double) suggestions.Count / 5);
-            // var list = suggestions.Skip((page - 1) * 5).Take(5).ToList();
             var list = suggestions;
 
             switch (sortOrder)

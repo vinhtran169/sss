@@ -48,7 +48,6 @@
         </th>
         <th/>
         <th/>
-        <th/>
     </tr>
     </thead>
     <tbody>
@@ -63,11 +62,14 @@
             <td>@s.UpdatedDate</td>
             <td><a asp-controller="Suggestion" asp-action="Edit" asp-route-id="@s.Id">Edit</a></td>
             <td><a asp-controller="Suggestion" asp-action="Details" asp-route-id="@s.Id">Details</a></td>
-            <td><a asp-controller="Suggestion" asp-action="Delete" asp-route-id="@s.Id">Delete</a></td>
         </tr>
     }
     </tbody>
 </table>
+
+<div style="display: flex; justify-content: center;">
+    Page @ViewBag.Page of @ViewBag.Pages
+</div>
 
 <div style="display: flex; justify-content: center; margin-top: 5px;">
     <div class="pagination-container">
