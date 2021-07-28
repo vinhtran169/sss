@@ -43,7 +43,7 @@
                 "List", new {sortOrder = ViewBag.CreatedSort})
         </th>
         <th>
-            @Html.ActionLink(ViewBag.CurrentSort == "updated" ? "Updated Date ▼" : "Updated Date", 
+            @Html.ActionLink(ViewBag.CurrentSort == "updated" || ViewBag.CurrentSort == null ? "Updated Date ▼" : "Updated Date", 
                 "List", new {sortOrder = ViewBag.UpdatedSort})
         </th>
         <th/>

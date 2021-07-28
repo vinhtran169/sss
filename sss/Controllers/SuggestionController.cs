@@ -213,7 +213,7 @@ namespace sss.Controllers
                 case "created":
                     list = list.OrderByDescending(s => s.CreatedDate).ToList();
                     break;
-                case "updated":
+                default:
                     list = list.OrderByDescending(s => s.UpdatedDate).ToList();
                     break;
             }
