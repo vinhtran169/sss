@@ -200,7 +200,9 @@ namespace sss.Controllers
 			}
                 
 		}
-       // [Route("home/suggest/edit/id")]
+       
+        //[Route("home/suggest/edit/id")]
+        
         public IActionResult Edit(int? id)
 		{
 
