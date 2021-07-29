@@ -189,7 +189,6 @@ namespace sss.Controllers
                 return View(model.suggestions);
             }
         }
-<<<<<<< HEAD
        //[Route("home/suggest/views/id")]
         public IActionResult Details(int? id)
 		{
@@ -202,7 +201,6 @@ namespace sss.Controllers
 		}
        
         //[Route("home/suggest/edit/id")]
-        
         public IActionResult Edit(int? id)
 		{
 
@@ -227,7 +225,6 @@ namespace sss.Controllers
             }
             return View(suggestion);
 		}
-=======
 
         private static (List<Suggestion> suggestions, int pages, int page) Paging(List<Suggestion> suggestions, int page,
             string sortOrder)
@@ -261,6 +258,5 @@ namespace sss.Controllers
 
             return (list, pages, page);
         }
->>>>>>> master
     }
 }
