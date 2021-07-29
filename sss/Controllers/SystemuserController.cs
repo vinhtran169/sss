@@ -12,6 +12,15 @@ namespace sss.Controllers
 {
 	public class SystemuserController : Controller
 	{
+<<<<<<< HEAD
+		
+		public IActionResult Login()
+		{
+			return PartialView("_LoginForm");
+		}
+
+=======
+>>>>>>> master
 
         public IActionResult Login()
         {
