@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using X.PagedList;
 using sss.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -139,7 +138,7 @@ namespace sss.Controllers
         }
         
         [Route("home/suggest/list")]
-        public IActionResult List(string sortOrder, string searchString, string currentFilter, int? page)
+        public IActionResult List(string sortOrder, string searchString, string currentFilter, int page = 1)
         {
             currentUser = HttpContext.Session.GetString("username"); // Get session value
 
@@ -176,33 +175,21 @@ namespace sss.Controllers
                                                          || s.Creator.Contains(searchString));
                 }
 
-                switch (sortOrder)
-                {
-                    case "title":
-                        listSuggest = listSuggest.OrderBy(s => s.Title);
-                        break;
-                    case "description":
-                        listSuggest = listSuggest.OrderBy(s => s.Description);
-                        break;
-                    case "creator":
-                        listSuggest = listSuggest.OrderBy(s => s.Creator);
-                        break;
-                    case "implement":
-                        listSuggest = listSuggest.OrderByDescending(s => s.ImplementDate);
-                        break;
-                    case "created":
-                        listSuggest = listSuggest.OrderByDescending(s => s.CreatedDate);
-                        break;
-                    default:
-                        listSuggest = listSuggest.OrderByDescending(s => s.UpdatedDate);
-                        break;
+                var suggestions = listSuggest.ToList();
+                var model = Paging(suggestions, page, sortOrder);
+
+                ViewBag.Pages = model.pages;
+                ViewBag.Page = model.page;
+
+                if (page > model.pages && model.pages != 0)
+                { 
+                    return View("~/Views/Shared/NotFound.cshtml"); // Not Found
                 }
 
-                int pageSize = 5;
-                int pageNumber = (page ?? 1);
-                return View(listSuggest.ToPagedList(pageNumber, pageSize));
+                return View(model.suggestions);
             }
         }
+<<<<<<< HEAD
        //[Route("home/suggest/views/id")]
         public IActionResult Details(int? id)
 		{
@@ -238,5 +225,40 @@ namespace sss.Controllers
             }
             return View(suggestion);
 		}
+=======
+
+        private static (List<Suggestion> suggestions, int pages, int page) Paging(List<Suggestion> suggestions, int page,
+            string sortOrder)
+        {
+            int pages = (int) Math.Ceiling((double) suggestions.Count / 5);
+            var list = suggestions;
+
+            switch (sortOrder)
+            {
+                case "title":
+                    list = list.OrderBy(s => s.Title).ToList();
+                    break;
+                case "description":
+                    list = list.OrderBy(s => s.Description).ToList();
+                    break;
+                case "creator":
+                    list = list.OrderBy(s => s.Creator).ToList();
+                    break;
+                case "implement":
+                    list = list.OrderByDescending(s => s.ImplementDate).ToList();
+                    break;
+                case "created":
+                    list = list.OrderByDescending(s => s.CreatedDate).ToList();
+                    break;
+                default:
+                    list = list.OrderByDescending(s => s.UpdatedDate).ToList();
+                    break;
+            }
+            
+            list = list.Skip((page - 1) * 5).Take(5).ToList();
+
+            return (list, pages, page);
+        }
+>>>>>>> master
     }
 }
